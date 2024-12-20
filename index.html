@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image2Banner</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div>
+    <img width="100%" id="imagePreview" alt="Selected Image" src="assets/selectImage.png"/>
+</div>
+<div id="images">
+</div>
+<div id="forBG">
+    <div class="imageSelector">
+        <button class="selectFile" id="selectFile">Select Image / Json</button>
+        <div class="resolution">
+            <input class="width" type="number">
+            <span>x</span>
+            <input class="height" type="number">
+        </div>
+    </div>
+
+    <div class="progressBar">
+    <span class="descriptionRange">Generating Banners...<br>
+        <small>Do not turn off the computer until the generation is complete.</small>
+    </span>
+        <div class="unLoaded">Loading...</div>
+        <div class="loaded">Loading...</div>
+    </div>
+
+
+    <div class="saveButtons">
+        <button id="saveAsImg" class="saveButton">Save As Image</button>
+        <button id="saveAsJson" style="margin-left:8px" class="saveButton">Save As Json</button>
+    </div>
+    <div class="craftBanners">
+        <div class="craftBannersCoords">
+        <span class="descriptionCheckbox">Select the coordinates of the banner you want to craft.</span>
+            <div class="coords">
+                <input id="x_coord" type="number" min="0" max="0" value="0">
+                <span>x</span>
+                <input id="y_coord" type="number" min="0" max="0" value="0">
+            </div>
+        </div>
+        <div class="giveCommand">
+        <span class="descriptionCheckbox">Command to obtain a banner:<br>
+            <small>/give @p minecraft:banner</small>
+        </span>
+        </div>
+        <div class="bannerAndBlock">
+            <div class="BannerInfo">
+                <p style="margin: 0px">Banner</p>
+                <img src="assets/banner.png" width="100%" alt="">
+            </div>
+            <div class="BlockInfo">
+                <p style="margin: 0px; height: 55px">andesite</p>
+                <img src="assets/block.png" style="max-width: 100px" width="100%" alt="">
+            </div>
+        </div>
+        <div class="craftStep" id="craftStepSample">
+            <div class="BannerInfo">
+                <p style="margin: 0px; height: 55px"></p>
+                <img src="assets/banner.png" width="100%" alt="">
+            </div>
+            <div class="BannerInfo">
+                <p style="margin: 0px; height: 54px">Add</p>
+                <img src="assets/banner.png" width="100%" alt="">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="settingCheckbox">
+    <span class="descriptionCheckbox">Generate Blocks<br>
+        <small>Generate blocks behind banners?</small>
+    </span>
+        <label>
+            <input type="checkbox" checked>
+            <div class="toggle"></div>
+        </label>
+    </div>
+    <div class="settingCheckbox">
+    <span class="descriptionCheckbox">Generate Layered Banners<br>
+        <small>Generate banners that will appear behind the lower part of the banner?</small>
+    </span>
+        <label>
+            <input type="checkbox" checked>
+            <div class="toggle"></div>
+        </label>
+    </div>
+    <div class="settingCheckbox">
+    <span class="descriptionCheckbox">Generate Banners With 6+ Patterns<br>
+        <small>Should banners with more than 6 patterns be generated? They can't be crafted, only obtained through commands.</small>
+    </span>
+        <label>
+            <input type="checkbox">
+            <div class="toggle"></div>
+        </label>
+    </div>
+    <div class="settingCheckbox">
+    <span class="patternsBannerItems">Use Pattern Banners Items<br>
+        <small>Can banners use pattern items, such as the thing, globe, etc.?</small>
+    </span>
+        <label>
+            <input type="checkbox">
+            <div class="toggle"></div>
+        </label>
+    </div>
+    <div class="settingRange">
+    <span class="descriptionRange">Threads Count<br>
+        <small>The number of threads a program can use.</small>
+    </span>
+        <div class="range">
+            <input type="range" id="threadsRange" class="slider" min="1" max="1" value="1"
+                   oninput="this.nextElementSibling.value = this.value">
+            <input type="number" id="threadsNumber" class="slider-value" value="1" step="1" max="1"
+                   oninput="this.previousElementSibling.value = this.value">
+        </div>
+        <div class="rangeNums">
+            <small>1</small>
+            <small id="maxThreadsRange">1</small>
+        </div>
+
+    </div>
+    <div class="bottomButtons">
+        <div class="links">
+            <a class="link" href="https://youtube.com/@MARSTeamMC"><img src="assets\yt-logo.png" width="38px"></a>
+            <a class="link" href="https://x.com/MARSTeamMC"><img src="assets\tw-logo.png" width="38px"></a>
+            <a class="link" href="https://github.com/MARSTeamMC"><img src="assets\gth-logo.png" width="38px"></a>
+            <a class="link" href="https://discord.gg/bYXrZ7aQWn"><img src="assets\ds-logo.png" width="38px"></a>
+        </div>
+        <button id="generateBanners" class="button">Generate Banners</button>
+    </div>
+</div>
+
+<script>
+    const { ipcRenderer, shell } = require('electron');
+
+    const threadsCount = navigator.hardwareConcurrency;
+    document.getElementById('threadsRange').max = threadsCount;
+    document.getElementById('threadsRange').value = threadsCount;
+    document.getElementById('threadsNumber').max = threadsCount;
+    document.getElementById('threadsNumber').value = threadsCount;
+    document.getElementById('maxThreadsRange').textContent = threadsCount;
+
+    let file_path = 'none'
+
+    document.getElementById('selectFile').addEventListener('click', async () => {
+        const data = await ipcRenderer.invoke('select-file');
+        const fileFormat = data[0];
+        filePath = data[1];
+        if (fileFormat=='json') {
+            document.getElementById('imagePreview').src = 'assets/jsonSelected.png';
+            document.querySelectorAll('.settingCheckbox').forEach(element => {
+              element.style.display = 'none';
+            });
+            document.querySelectorAll('.resolution')[0].style.display = 'none';
+        } else {
+            document.getElementById('imagePreview').src = filePath;
+            document.querySelectorAll('.settingCheckbox').forEach(element => {
+              element.style.display = 'flex';
+            });
+            document.querySelectorAll('.resolution')[0].style.display = 'flex';
+        }
+    });
+
+    document.getElementById('saveAsImg').addEventListener('click', async () => {
+        const operation = 'save_as_image';
+
+        const data = {
+            operation
+        };
+
+        ipcRenderer.send('send_data', data);
+    });
+
+    document.getElementById('saveAsJson').addEventListener('click', async () => {
+        const operation = 'save_as_json';
+
+        const data = {
+            operation
+        };
+
+        ipcRenderer.send('send_data', data);
+    });
+
+    document.getElementById('generateBanners').addEventListener('click', async () => {
+        const resolutionInputs = document.querySelectorAll('.resolution input');
+        const resolutionWidth = resolutionInputs[0].value;
+        const resolutionHeight = resolutionInputs[1].value;
+
+        const checkboxes = document.querySelectorAll('.settingCheckbox input[type="checkbox"]');
+        const generateBlocks = checkboxes[0].checked;
+        const generateLayeredBanners = checkboxes[1].checked;
+        const generateBigBanners = checkboxes[2].checked;
+        const usePatternItems = checkboxes[3].checked;
+
+        const rangeInputs = document.querySelectorAll('.settingRange input[type="range"]');
+        const threadsCount = rangeInputs[0].value;
+
+        document.querySelectorAll('.settingCheckbox').forEach(element => {
+            element.style.display = 'none';
+        });
+        document.querySelectorAll('.settingRange').forEach(element => {
+            element.style.display = 'none';
+        });
+        document.querySelectorAll('.resolution')[0].style.display = 'none';
+        document.querySelectorAll('.selectFile')[0].style.display = 'none';
+        document.getElementById('generateBanners').style.display = 'none';
+        document.querySelectorAll('.progressBar')[0].style.display = 'flex';
+
+        const operation = 'generate';
+
+        const data = {
+            operation,
+            filePath,
+            resolution: [resolutionWidth, resolutionHeight],
+            generateBlocks,
+            generateLayeredBanners,
+            generateBigBanners,
+            usePatternItems,
+            threadsCount
+        };
+
+        ipcRenderer.send('send_data', data);
+
+        for (let i = 0; i < resolutionWidth*2 * Math.round(resolutionHeight / 2)/2; i++) {
+            var ban = document.createElement("img");
+            ban.id = i;
+            ban.src = 'assets/banner.png'
+            ban.classList.add("banner");
+            ban.style.bottom = (6+6.5*Math.floor(i/resolutionWidth)).toString()+'%';
+            var src = document.getElementById("images");
+            src.style.gridTemplateColumns = 'auto '.repeat(resolutionWidth);
+            src.appendChild(ban);
+        }
+    });
+
+
+    ipcRenderer.on('update-progress-bar', (event, text) => {
+        const unLoaded = document.querySelectorAll('.unLoaded')[0];
+        unLoaded.textContent = text;
+
+        const loaded = document.querySelectorAll('.loaded')[0];
+        loaded.textContent = text;
+        loaded.style.clipPath = 'inset(0 '+(100-parseInt(text.split('/')[0])/parseInt(text.split('/')[1])*100).toString()+'% 0 0)';
+    });
+
+    ipcRenderer.on('update-on-generated', (event) => {
+        document.querySelectorAll('.progressBar')[0].style.display = 'none';
+        document.querySelectorAll('.saveButtons')[0].style.display = 'flex';
+        document.querySelectorAll('.bannerAndBlock')[0].style.display = 'flex';
+        document.querySelectorAll('.craftBannersCoords')[0].style.display = 'flex';
+        document.querySelectorAll('.giveCommand')[0].style.display = 'flex';
+        document.querySelectorAll('.banner').forEach(function(a) {
+          a.remove()
+        })
+
+        const operation = 'steps';
+        const id = '(0,0)';
+
+        const data = {
+            operation,
+            id,
+        }
+
+        ipcRenderer.send('send_data', data);
+    });
+
+    ipcRenderer.on('update-banner', (event, lst) => {
+        const banner = document.getElementById(lst[0]);
+        banner.src = lst[1];
+    });
+
+    ipcRenderer.on('update-image-preview', (event, text) => {
+        const image = document.getElementById('imagePreview');
+        image.src = text;
+    });
+
+    ipcRenderer.on('update-default-resolution', (event, lst) => {
+        const width = document.querySelector('.width');
+        const height = document.querySelector('.height');
+        width.value = lst[0];
+        height.value = lst[1];
+    });
+
+
+
+    ipcRenderer.on('remove-steps', (event) => {
+        const old = document.querySelectorAll('.craftStep');
+        old.forEach(element => {
+            if (element.id!='craftStepSample') {
+                element.remove();
+            }
+        });
+    });
+
+    ipcRenderer.on('create-steps', (event, data) => {
+        const id = data[1];
+        const old = document.getElementById(id);
+        if (!old) {
+            const original = document.getElementById('craftStepSample');
+            const clone = original.cloneNode(true);
+            clone.id = id;
+            document.querySelectorAll('.craftBanners')[0].appendChild(clone);
+        }
+    });
+
+    ipcRenderer.on('update-steps', (event, data) => {
+        const id = data[1];
+        const img = data[2];
+        const pattern = data[3];
+        const pattern_name = data[4];
+        const step = document.getElementById(id);
+        step.style.display = 'flex';
+        const bannerInfo = step.querySelectorAll('.BannerInfo');
+        bannerInfo[0].querySelectorAll('img')[0].src = img;
+        bannerInfo[1].querySelectorAll('img')[0].src = pattern;
+        const p = step.querySelectorAll('p');
+        p[0].textContent = 'Step - '+id;
+        p[1].textContent = pattern_name;
+    });
+
+    ipcRenderer.on('final-result', (event, data) => {
+        const banner_img = data[1];
+        const block = data[2];
+        const block_img = data[3];
+        const command = data[4];
+        const result = document.querySelectorAll('.bannerAndBlock')[0];
+        const bannerInfo = result.querySelectorAll('.BannerInfo')[0];
+        const blockInfo = result.querySelectorAll('.BlockInfo')[0];
+        const giveCommand = document.querySelectorAll('.giveCommand')[0];
+        bannerInfo.querySelectorAll('img')[0].src = banner_img;
+        blockInfo.querySelectorAll('img')[0].src = block_img;
+        blockInfo.querySelectorAll('p')[0].textContent = block;
+        giveCommand.querySelectorAll('small')[0].innerText = command;
+    });
+
+    document.getElementById('x_coord').addEventListener('change', async () => {
+        const operation = 'steps';
+        const id = '('+document.getElementById('x_coord').value+','+document.getElementById('y_coord').value+')';
+
+        const data = {
+            operation,
+            id,
+        }
+
+        ipcRenderer.send('send_data', data);
+    });
+
+    document.getElementById('y_coord').addEventListener('change', async () => {
+        const operation = 'steps';
+        const id = '('+document.getElementById('x_coord').value+','+document.getElementById('y_coord').value+')';
+
+        const data = {
+            operation,
+            id,
+        }
+
+        ipcRenderer.send('send_data', data);
+    });
+</script>
+
+</body>
+</html>

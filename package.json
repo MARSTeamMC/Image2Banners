@@ -1,0 +1,17 @@
+{
+  "name": "banner_convertor_app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "MARS Team",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^33.2.1"
+  },
+  "dependencies": {
+    "image-size": "^1.1.1"
+  }
+}

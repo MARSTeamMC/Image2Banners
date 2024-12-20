@@ -1,0 +1,338 @@
+body {
+    background-color: #0f111a;
+    font-family: Arial, sans-serif;
+    color: white;
+    margin: 8px 8px 0px 8px;
+}
+
+.selectFile {
+    background-color: #191c29;
+    color: #ff4151;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.button {
+    background-color: #191c29;
+    color: #ff4151;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    width: auto;
+}
+
+button:hover {
+    background-color: #ff4151;
+    color: #191c29;
+}
+
+.saveButton {
+    background-color: #191c29;
+    color: #ff4151;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+input {
+    font-size: 16px;
+    width: 40%;
+    border-radius: 10px;
+    border: none;
+    padding-block: 10px;
+    padding-inline: 2px;
+    background: none;
+    color: white;
+    text-align: center;
+}
+
+.resolution {
+    margin-left: 8px;
+    border-radius: 10px;
+    display: flex;
+    width: 35%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #191c29;
+}
+
+input:focus-visible {
+    outline: none;
+    border-style: solid;
+    border-color: #ff4151;
+    border-width: 2px;
+    padding-block: 8px;
+    padding-inline: 0px;
+}
+
+.settingCheckbox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;
+    background-color: #191c29;
+    margin-top: 8px;
+    border-radius: 10px;
+}
+
+.giveCommand {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;
+    background-color: #191c29;
+    margin-top: 8px;
+    border-radius: 10px;
+}
+
+.progressBar {
+    display: none;
+    padding: 15px 25px;
+    background-color: #191c29;
+    margin-top: 8px;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 82px;
+}
+
+.unLoaded {
+    background-color: #252939;
+    height: 20px;
+    border-radius: 10px;
+    color: #ff4151;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 8px;
+
+}
+
+.loaded {
+    background-color: #ff4151;
+    height: 20px;
+    border-radius: 10px;
+    color: #252939;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    bottom: 19px;
+    clip-path: inset(0 100% 0 0);
+}
+
+
+.settingRange {
+    display: flex;
+    padding: 15px 25px;
+    background-color: #191c29;
+    margin-top: 8px;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+
+.range {
+    margin-top:8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rangeNums {
+    margin-right:70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.descriptionCheckbox {
+    max-width: 80%;
+}
+
+.toggle {
+    position: relative;
+    width: 48px;
+    height: 24px;
+    background: #333;
+    border-radius: 24px;
+    cursor: pointer;
+    background-color: #252939
+}
+
+.toggle:before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 2px;
+    left: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + .toggle {
+    background: #ff4151;
+}
+
+input[type="checkbox"]:checked + .toggle:before {
+    transform: translateX(24px);
+}
+
+input[type="range"] {
+    margin-right: 16px;
+    width: 100%;
+    background-color: #252939;
+    height:1px;
+    accent-color: #fff;
+    -webkit-appearance: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#threadsNumber {
+    width: 48px;
+    background: #252939;
+}
+
+.imageSelector {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.saveButtons {
+    display: none;
+    align-items: center;
+    flex-direction: row;
+}
+
+.bottomButtons {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+#images {
+    aspect-ratio: 0 / 0;
+    display: grid;
+    grid-template-columns: auto;
+    position: absolute;
+    width: -webkit-fill-available;
+    top: 8px;
+    margin-right: 8px;
+    height: 1px;
+    z-index: -1;
+}
+
+.banner {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    bottom: 6.5%;
+}
+
+.block  {
+    width: 100%;
+    height: fit-content;
+}
+
+#imagePreview {
+    position: relative;
+    z-index: -1;
+    background-color: #191c29;
+}
+
+#forBG {
+    background-color: #0f111a;
+    position: relative;
+    bottom: 8px;
+    padding-top: 8px;
+}
+
+.bannerAndBlock {
+    display: none;
+    align-items: flex-start;
+    justify-content: space-around;
+    padding: 15px 0px;
+    background-color: #191c29;
+    margin-top: 8px;
+    border-radius: 10px;
+}
+
+.craftStep {
+    display: none;
+    align-items: flex-start;
+    justify-content: space-around;
+    padding: 15px 0px;
+    background-color: #191c29;
+    margin-top: 8px;
+    border-radius: 10px;
+}
+
+.BannerInfo {
+    text-align: center;
+    width: 100px;
+}
+
+.BlockInfo {
+    text-align: center;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.coords {
+    margin-left: 8px;
+    border-radius: 10px;
+    display: flex;
+    width: 35%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #252939;
+}
+
+.craftBannersCoords {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;
+    background-color: #191c29;
+    margin-top: 8px;
+    border-radius: 10px;
+}
+
+.links {
+    display: flex;
+}
+
+.link {
+    margin-right: 8px
+}
