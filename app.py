@@ -1,12 +1,15 @@
 import base64
-import sys
 import json
+import multiprocessing
+import sys
 from io import BytesIO
+
 from PIL import Image
 
 import image_to_banners
 import json_to_banners
 import list_to_banner
+from utils import print_with_flush, get_assets_folder
 
 file_name = None
 image_banner = None
@@ -119,7 +122,7 @@ def img(data):
     image_banner, dict_banner, file_name = image_to_banners.banner_gen(image_path, resolution, generate_blocks, generate_layered_banners, generate_big_banners,
                                             use_pattern_items, threads_count)
 
-    print(f"Generated_{resolution[0]}.{resolution[1]}")
+    print_with_flush(f"Generated_{resolution[0]}.{resolution[1]}")
 
 
 def jsn(data):
@@ -130,7 +133,7 @@ def jsn(data):
 
     image_banner, dict_banner, file_name, resolution = json_to_banners.banner_gen(json_path, threads_count)
 
-    print(f"Generated_{resolution[0]}.{resolution[1]}")
+    print_with_flush(f"Generated_{resolution[0]}.{resolution[1]}")
 
 
 def save_as_image():
@@ -146,23 +149,23 @@ def save_as_json():
 
 def steps(data):
     global dict_banner
-    print("RemoveSteps")
+    print_with_flush("RemoveSteps")
 
     id = data['id']
 
     buffer = BytesIO()
-    block = Image.open(f"assets/block/{dict_banner[id]['block']}.png")
+    block = Image.open(f"{get_assets_folder()}/block/{dict_banner[id]['block']}.png")
     block.save(buffer, format="PNG")
     buffer.seek(0)
     block_result = base64.b64encode(buffer.read()).decode('utf-8')
 
     if 'banner' not in dict_banner[id]:
         buffer = BytesIO()
-        Image.open('assets/banner.png').save(buffer, format="PNG")
+        Image.open(f'{get_assets_folder()}/banner.png').save(buffer, format="PNG")
         buffer.seek(0)
         banner_result = base64.b64encode(buffer.read()).decode('utf-8')
 
-        print(f"StepsResult|data:image/png;base64,{banner_result}|{dict_banner[id]['block']}|data:image/png;base64,{block_result}")
+        print_with_flush(f"StepsResult|data:image/png;base64,{banner_result}|{dict_banner[id]['block']}|data:image/png;base64,{block_result}")
         return
 
     banner_lst = dict_banner[id]['banner']
@@ -177,7 +180,7 @@ def steps(data):
     command = f'/give @p minecraft:{banner_lst[0].replace("-background", "_banner")}[minecraft:banner_patterns=['+patterns+']]'
 
 
-    print(f"StepsResult|data:image/png;base64,{banner_result}|{dict_banner[id]['block'].replace('_', ' ')}|data:image/png;base64,{block_result}|{command}")
+    print_with_flush(f"StepsResult|data:image/png;base64,{banner_result}|{dict_banner[id]['block'].replace('_', ' ')}|data:image/png;base64,{block_result}|{command}")
 
     for c, i in enumerate(banner_steps):
         buffer = BytesIO()
@@ -186,7 +189,7 @@ def steps(data):
         image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
 
         buffer = BytesIO()
-        pattern = Image.open('assets/banner_patterns/'+banner_lst[c]+'.png')
+        pattern = Image.open(f'{get_assets_folder()}/banner_patterns/'+banner_lst[c]+'.png')
         color_code = banner_lst[c].replace('-', ' ')
 
         if 'background' not in banner_lst[c]:
@@ -198,11 +201,11 @@ def steps(data):
         buffer.seek(0)
         image_base64_pattern = base64.b64encode(buffer.read()).decode('utf-8')
 
-        print(f"Steps_{c}_data:image/png;base64,{image_base64}_data:image/png;base64,{image_base64_pattern}_{pattern_name}")
-
+        print_with_flush(f"Steps_{c}_data:image/png;base64,{image_base64}_data:image/png;base64,{image_base64_pattern}_{pattern_name}")
 
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     while True:
         try:
             input_data = sys.stdin.readline().strip()
@@ -210,7 +213,7 @@ if __name__ == "__main__":
                 continue
 
             data = json.loads(input_data)
-            print(data)
+            print_with_flush(data)
 
             if data['operation'] == 'generate':
                 file_extension = data['filePath'].split(".")[1]

@@ -1,17 +1,21 @@
 {
-  "name": "banner_convertor_app",
-  "version": "1.0.0",
+  "name": "image2banners",
+  "productName": "Image2Banners",
+  "author": "MARS Team",
+  "description": "Converts images into complex Minecraft banners.",
+  "version": "1.1.0",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
   "keywords": [],
-  "author": "MARS Team",
-  "license": "ISC",
+  "license": "BSD 2-Clause",
   "devDependencies": {
-    "electron": "^33.2.1"
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
   },
   "dependencies": {
-    "image-size": "^1.1.1"
+    "image-size": "^1.1.1",
+    "ps-tree": "^1.2.0"
   }
 }

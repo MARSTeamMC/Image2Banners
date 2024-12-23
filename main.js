@@ -20,7 +20,15 @@ app.whenReady().then(() => {
 
     mainWindow.loadFile('index.html');
 
-    pythonProcess = spawn('python', ['-u', 'app.py']);
+    const dev = false;
+
+    if (dev==true) {
+        pythonProcess = spawn('python', ['-u', 'app.py']);
+    } else {
+        const backendPath = path.join(__dirname, "dist", 'app.exe');
+        pythonProcess = spawn(backendPath, ['app.exe']);
+    }
+
 
     pythonProcess.stderr.on('data', (data) => {
         console.error(`Python Error: ${data}`);
@@ -102,8 +110,6 @@ app.whenReady().then(() => {
     ipcMain.on('send_data', async (event, data) => {
         try {
             pythonProcess.stdin.write(JSON.stringify(data) + '\n');
-            pythonProcess.stdout.on('data', (output) => {
-            });
 
             pythonProcess.stderr.on('data', (error) => {
                 console.error(`Python Error: ${error.toString()}`);
@@ -128,5 +134,7 @@ app.whenReady().then(() => {
 });
 
 app.on('quit', () => {
-    pythonProcess.kill();
+    if (pythonProcess) {
+        pythonProcess.kill();
+    }
 });

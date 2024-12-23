@@ -11,6 +11,7 @@ import numpy as np
 from PIL import Image
 
 import list_to_banner
+from utils import print_with_flush, get_assets_folder
 
 executor = None
 
@@ -61,8 +62,8 @@ def banner_gen(json_path, threads_count):
             full.save(buffer, format="PNG")
             buffer.seek(0)
             image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-            print(f"imagePreview_data:image/png;base64,{image_base64}")
-            print(f'progressBar:{section_num}/{len(blocks)+len(banners)}')
+            print_with_flush(f"imagePreview_data:image/png;base64,{image_base64}")
+            print_with_flush(f'progressBar:{section_num}/{len(blocks)+len(banners)}')
 
     executor.shutdown()
 
@@ -81,14 +82,14 @@ def banner_gen(json_path, threads_count):
             full.save(buffer, format="PNG")
             buffer.seek(0)
             image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-            print(f"imagePreview_data:image/png;base64,{image_base64}")
-            print(f'progressBar:{len(blocks)+len(banners)-section_num}/{len(blocks)+len(banners)}')
+            print_with_flush(f"imagePreview_data:image/png;base64,{image_base64}")
+            print_with_flush(f'progressBar:{len(blocks)+len(banners)-section_num}/{len(blocks)+len(banners)}')
 
     buffer = BytesIO()
     full.save(buffer, format="PNG")
     buffer.seek(0)
     image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-    print(f"imagePreview_data:image/png;base64,{image_base64}")
+    print_with_flush(f"imagePreview_data:image/png;base64,{image_base64}")
 
     file_name = Path(json_path).stem
 
@@ -96,7 +97,7 @@ def banner_gen(json_path, threads_count):
 
 
 def process_section(c, section):
-    path = "assets/block/"
+    path = f"{get_assets_folder()}/block/"
 
     coords = section[0]
     section = section[1]

@@ -1,7 +1,10 @@
 from PIL import Image
 
+from utils import get_assets_folder
+
+
 def convert(banner_lst):
-    path = "assets/banner_patterns/"
+    path = f"{get_assets_folder()}/banner_patterns/"
     banner = Image.open(path+banner_lst[0]+".png")
     for bv in banner_lst[1:]:
         variant = Image.open(path+bv+".png")
@@ -11,7 +14,7 @@ def convert(banner_lst):
     return banner
 
 def convert_with_steps(banner_lst):
-    path = "assets/banner_patterns/"
+    path = f"{get_assets_folder()}/banner_patterns/"
 
     banner_steps = []
 

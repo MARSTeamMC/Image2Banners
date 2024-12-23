@@ -1,14 +1,17 @@
+import base64
 import math
-from PIL import Image, ImageDraw
-import numpy as np
-from skimage.metrics import structural_similarity as ssim
-from skimage.color import rgb2lab
-import cv2
 import os
 from concurrent.futures import as_completed, ProcessPoolExecutor
-from pathlib import Path
-import base64
 from io import BytesIO
+from pathlib import Path
+
+import cv2
+import numpy as np
+from PIL import Image, ImageDraw
+from skimage.color import rgb2lab
+from skimage.metrics import structural_similarity as ssim
+
+from utils import print_with_flush, get_assets_folder
 
 # colors = {
 #     "white": [189, 193, 193],
@@ -66,7 +69,7 @@ def banner_gen(image_path, resolution, gen_blocks, gen_layering, gen_big, use_pa
     image.save(buffer, format="PNG")
     buffer.seek(0)
     image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-    print(f"imagePreview_data:image/png;base64,{image_base64}")
+    print_with_flush(f"imagePreview_data:image/png;base64,{image_base64}")
 
     images = [image.crop((w * FULL_WIDTH, h * FULL_HEIGHT-22, (w + 1) * FULL_WIDTH, (h + 1) * FULL_HEIGHT))
               for h in range(math.ceil(OH / FULL_HEIGHT))
@@ -106,8 +109,8 @@ def banner_gen(image_path, resolution, gen_blocks, gen_layering, gen_big, use_pa
         if len(section)==4:
             banner_json[f"({x},{y-1})"]["banner"] = section[3]
 
-        print(f"bannerPreview{banner_num}_data:image/png;base64,{image_base64}")
-        print(f'progressBar_data:{banner_bar}/{len(images)}')
+        print_with_flush(f"bannerPreview{banner_num}_data:image/png;base64,{image_base64}")
+        print_with_flush(f'progressBar_data:{banner_bar}/{len(images)}')
 
     executor.shutdown()
 
@@ -124,7 +127,7 @@ def banner_gen(image_path, resolution, gen_blocks, gen_layering, gen_big, use_pa
     full.save(buffer, format="PNG")
     buffer.seek(0)
     image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-    print(f"imagePreview_data:image/png;base64,{image_base64}")
+    print_with_flush(f"imagePreview_data:image/png;base64,{image_base64}")
 
     return full, banner_json, file_name
 
@@ -194,7 +197,7 @@ def process_image(c, img, gen_blocks, gen_layering, gen_big, use_pattern_items):
     return [c, full, section]
 
 def generate_blocks(image_rgb, part):
-    path = "assets/blocks/"
+    path = f"{get_assets_folder()}/blocks/"
 
     block_name = "polished_andesite"
 
@@ -238,7 +241,7 @@ def generate_banner(image2_rgb, gen_big, use_pattern_items):
 
     colors_in_img = set(colors_in_img)
 
-    path = "assets/banner_patterns/"
+    path = f"{get_assets_folder()}/banner_patterns/"
     only_gradients = False
     if len(colors_in_img) == 1:
         # only_gradients=True
