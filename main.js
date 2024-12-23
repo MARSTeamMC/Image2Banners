@@ -133,8 +133,6 @@ app.whenReady().then(() => {
     });
 });
 
-app.on('quit', () => {
-    if (pythonProcess) {
-        pythonProcess.kill();
-    }
+app.on('will-quit', () => {
+    pythonProcess.stdin.write('{"operation": "close"}' + '\n');
 });

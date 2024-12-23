@@ -215,6 +215,9 @@ if __name__ == "__main__":
             data = json.loads(input_data)
             print_with_flush(data)
 
+            if data['operation'] == 'close':
+                break
+
             if data['operation'] == 'generate':
                 file_extension = data['filePath'].split(".")[1]
                 if file_extension == 'json':
