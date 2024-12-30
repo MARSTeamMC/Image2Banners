@@ -1,6 +1,9 @@
 # Image2Banners
 ## Description
 This app takes images and converts them into complex banners, And show craft steps for each banner. You also can save it as JSON file, so you don't have to regenerate complex banners from image each time.
+## How to install
+### For Windows
+In the Releases section, find Image2Banners X.X.X and download Image2Banners-win32-x64.zip. Unzip the file and open Image2Banners.exe.
 ## Examples
 ### №1
 <img src="https://github.com/user-attachments/assets/4af0865c-43e9-4d82-8a83-bc8ec3d51a86" width="33%">
