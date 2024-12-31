@@ -145,7 +145,7 @@
     document.getElementById('threadsNumber').value = threadsCount;
     document.getElementById('maxThreadsRange').textContent = threadsCount;
 
-    let file_path = 'none'
+    let file_path = 'none';
 
     document.getElementById('selectFile').addEventListener('click', async () => {
         const data = await ipcRenderer.invoke('select-file');
@@ -215,7 +215,7 @@
 
         const data = {
             operation,
-            filePath,
+            filePath: encodeURI(filePath),
             resolution: [resolutionWidth, resolutionHeight],
             generateBlocks,
             generateLayeredBanners,
@@ -255,7 +255,7 @@
         document.querySelectorAll('.craftBannersCoords')[0].style.display = 'flex';
         document.querySelectorAll('.giveCommand')[0].style.display = 'flex';
         document.querySelectorAll('.banner').forEach(function(a) {
-          a.remove()
+          a.remove();
         })
 
         const operation = 'steps';

@@ -2,6 +2,7 @@ import base64
 import json
 import multiprocessing
 import sys
+import urllib.parse
 from io import BytesIO
 
 from PIL import Image
@@ -111,7 +112,7 @@ resource_names = {
 def img(data):
     global image_banner, dict_banner, file_name
 
-    image_path = data['filePath']
+    image_path = urllib.parse.unquote(data['filePath'])
     resolution = data['resolution']
     generate_blocks = data['generateBlocks']
     generate_layered_banners = data['generateLayeredBanners']
@@ -128,7 +129,7 @@ def img(data):
 def jsn(data):
     global image_banner, dict_banner, file_name
 
-    json_path = data['filePath']
+    json_path = urllib.parse.unquote(data['filePath'])
     threads_count = int(data['threadsCount'])
 
     image_banner, dict_banner, file_name, resolution = json_to_banners.banner_gen(json_path, threads_count)
