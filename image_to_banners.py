@@ -163,8 +163,8 @@ def process_image(c, img, gen_blocks, gen_layering, gen_big, use_pattern_items):
         block_up_name, block_up = generate_blocks(img_up_rgb, "up")
         block_down_name, block_down = generate_blocks(img_down_rgb, "down")
     else:
-        block_up = generate_blocks(None, "up")
-        block_down = generate_blocks(None, "down")
+        block_up_name, block_up = generate_blocks(None, "up")
+        block_down_name, block_down = generate_blocks(None, "down")
 
     section.append(block_up_name)
     section.append(block_down_name)
