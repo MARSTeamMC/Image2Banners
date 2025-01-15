@@ -65,6 +65,7 @@ def banner_gen(image_path, resolution, gen_blocks, gen_layering, gen_big, use_pa
     
     image = image.resize((resolution_width*22, resolution_height*22))
     OW, OH = image.size
+
     buffer = BytesIO()
     image.save(buffer, format="PNG")
     buffer.seek(0)
@@ -225,31 +226,30 @@ def generate_blocks(image_rgb, part):
     return block_name, best_block
 
 def generate_banner(image2_rgb, gen_big, use_pattern_items):
+    path = f"{get_assets_folder()}/banner_patterns/"
+
     patterns = []
 
-    colors_in_img = get_colors(image2_rgb, colors, False)
+    colors_in_img1 = get_colors(image2_rgb, colors)
 
     biggest_color = None
     biggest_color_count = 0
-    for i in set(colors_in_img):
-        count = colors_in_img.count(i)
+    for i in set(colors_in_img1):
+        count = colors_in_img1.count(i)
         if biggest_color_count<count:
             biggest_color = i
             biggest_color_count=count
 
     patterns.append(f"{biggest_color}-background")
+    if len(colors_in_img1) == 1:
+        return patterns, Image.open(f"{path}{biggest_color}-background.png")
 
-    colors_in_img = set(colors_in_img)
+    new_colors = colors.copy()
+    for i in set(colors_in_img1):
+        new_colors.pop(i)
 
-    path = f"{get_assets_folder()}/banner_patterns/"
-    only_gradients = False
-    if len(colors_in_img) == 1:
-        # only_gradients=True
-        # other_colors = colors.copy()
-        # other_colors.pop(list(colors_in_img)[0])
-        # other_color_in_img = get_colors(image2_rgb, other_colors, True)
-        # return Image.open(f"{path}{other_color_in_img}-background.png")
-        return patterns, Image.open(f"{path}{list(colors_in_img)[0]}-background.png")
+    colors_in_img2 = get_colors(image2_rgb, new_colors)
+    colors_in_img = set(colors_in_img1+colors_in_img2)
 
     best_similarity_score = 0
     last_best_similarity_score = -1
@@ -315,7 +315,7 @@ def compare_main_second(main_img, second_img, img):
     second_img.close()
     return False, main_img
 
-def get_colors(img, color_lst, one_color):
+def get_colors(img, color_lst):
     colors_in_img = []
     for i in img:
         for px_color in i:
