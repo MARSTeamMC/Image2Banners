@@ -20,7 +20,7 @@ app.whenReady().then(() => {
 
     mainWindow.loadFile('index.html');
 
-    const dev = false;
+    const dev = true;
 
     if (dev==true) {
         pythonProcess = spawn('python', ['-u', 'app.py']);

@@ -4,6 +4,7 @@ import multiprocessing
 import sys
 import urllib.parse
 from io import BytesIO
+from pathlib import Path
 
 from PIL import Image
 
@@ -139,12 +140,14 @@ def jsn(data):
 
 def save_as_image():
     global image_banner, file_name
-    image_banner.save(f"{file_name}.png")
+    Path("generated/images").mkdir(parents=True, exist_ok=True)
+    image_banner.save(f"generated/images/{file_name}.png")
 
 
 def save_as_json():
     global dict_banner, file_name
-    with open(f'{file_name}.json', 'w', encoding='utf-8') as f:
+    Path("generated/json").mkdir(parents=True, exist_ok=True)
+    with open(f'generated/json/{file_name}.json', 'w', encoding='utf-8') as f:
         json.dump(dict_banner, f, ensure_ascii=False, indent=4)
 
 
