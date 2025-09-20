@@ -138,16 +138,16 @@ def jsn(data):
     print_with_flush(f"Generated_{resolution[0]}.{resolution[1]}")
 
 
-def save_as_image():
+def save_as_image(data):
     global image_banner, file_name
     Path("generated/images").mkdir(parents=True, exist_ok=True)
-    image_banner.save(f"generated/images/{file_name}.png")
+    image_banner.save(f"generated/images/{file_name}_{int(data['resolution'][0])}x{int(data['resolution'][1])}.png")
 
 
-def save_as_json():
+def save_as_json(data):
     global dict_banner, file_name
     Path("generated/json").mkdir(parents=True, exist_ok=True)
-    with open(f'generated/json/{file_name}.json', 'w', encoding='utf-8') as f:
+    with open(f"generated/json/{file_name}_{int(data['resolution'][0])}x{int(data['resolution'][1])}.json", 'w', encoding='utf-8') as f:
         json.dump(dict_banner, f, ensure_ascii=False, indent=4)
 
 
@@ -230,10 +230,10 @@ if __name__ == "__main__":
                     img(data)
 
             elif data['operation'] == 'save_as_image':
-                save_as_image()
+                save_as_image(data)
 
             elif data['operation'] == 'save_as_json':
-                save_as_json()
+                save_as_json(data)
 
             elif data['operation'] == 'steps':
                 steps(data)

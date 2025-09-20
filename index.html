@@ -168,9 +168,13 @@
 
     document.getElementById('saveAsImg').addEventListener('click', async () => {
         const operation = 'save_as_image';
+        const resolutionInputs = document.querySelectorAll('.resolution input');
+        const resolutionWidth = resolutionInputs[0].value;
+        const resolutionHeight = resolutionInputs[1].value;
 
         const data = {
-            operation
+            operation,
+            resolution: [resolutionWidth, resolutionHeight]
         };
 
         ipcRenderer.send('send_data', data);
@@ -178,9 +182,13 @@
 
     document.getElementById('saveAsJson').addEventListener('click', async () => {
         const operation = 'save_as_json';
+        const resolutionInputs = document.querySelectorAll('.resolution input');
+        const resolutionWidth = resolutionInputs[0].value;
+        const resolutionHeight = resolutionInputs[1].value;
 
         const data = {
-            operation
+            operation,
+            resolution: [resolutionWidth, resolutionHeight]
         };
 
         ipcRenderer.send('send_data', data);
