@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
-const sizeOf = require('image-size');
+const { imageSize } = require('image-size');
 
 let mainWindow;
 let pythonProcess;
@@ -23,12 +23,11 @@ app.whenReady().then(() => {
     const dev = true;
 
     if (dev==true) {
-        pythonProcess = spawn('python', ['-u', 'app.py']);
+        pythonProcess = spawn('python', ['-u', 'app.py'], { detached: false });
     } else {
         const backendPath = path.join(__dirname, "dist", 'app.exe');
-        pythonProcess = spawn(backendPath, ['app.exe']);
+        pythonProcess = spawn(backendPath, ['app.exe'], { detached: false });
     }
-
 
     pythonProcess.stderr.on('data', (data) => {
         console.error(`Python Error: ${data}`);
@@ -38,7 +37,6 @@ app.whenReady().then(() => {
         console.log(`Python script exited with code ${code}`);
     });
 
-    // Handle image selection
     ipcMain.handle('select-file', async () => {
         const result = await dialog.showOpenDialog(mainWindow, {
             properties: ['openFile'],
@@ -55,7 +53,7 @@ app.whenReady().then(() => {
                 return [fileExtension, filePath];
             }
 
-            const dimensions = sizeOf(filePath);
+            const dimensions = imageSize(filePath);
             const width = dimensions.width;
             const height = dimensions.height;
 
@@ -133,6 +131,9 @@ app.whenReady().then(() => {
     });
 });
 
-app.on('will-quit', () => {
+app.on('before-quit', () => {
     pythonProcess.stdin.write('{"operation": "close"}' + '\n');
+    if (pythonProcess && !pythonProcess.killed) {
+        spawn("taskkill", ["/PID", pythonProcess.pid, "/T", "/F"]);
+    }
 });

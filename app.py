@@ -5,7 +5,6 @@ import sys
 import urllib.parse
 from io import BytesIO
 from pathlib import Path
-
 from PIL import Image
 
 import image_to_banners
