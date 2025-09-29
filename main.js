@@ -78,9 +78,6 @@ app.whenReady().then(() => {
             if (ratio>2) {
                 ratio=2;
             }
-            if (ratio<1) {
-                ratio=1;
-            }
             let new_size = Math.round(ratio * window_height * 0.76+424);
             mainWindow.setSize(new_size, window_height);
 
@@ -135,9 +132,6 @@ app.whenReady().then(() => {
         if (ratio>2) {
             ratio=2;
         }
-        if (ratio<1) {
-            ratio=1;
-        }
         let new_size = Math.round(ratio * height * 0.76+16);
         mainWindow.setSize(new_size, height);
     });
@@ -147,9 +141,6 @@ app.whenReady().then(() => {
         let ratio = resolutionWidth/resolutionHeight;
         if (ratio>2) {
             ratio=2;
-        }
-        if (ratio<1) {
-            ratio=1;
         }
         let new_size = Math.round(ratio * height * 0.76+424);
         mainWindow.setSize(new_size, height);
