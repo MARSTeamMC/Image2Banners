@@ -62,7 +62,7 @@ def banner_gen(json_path, threads_count):
             full.save(buffer, format="PNG")
             buffer.seek(0)
             image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-            print_with_flush(f"imagePreview_data:image/png;base64,{image_base64}")
+            print_with_flush(f"imagePreview|data:image/png;base64,{image_base64}")
             print_with_flush(f'progressBar:{section_num}/{len(blocks)+len(banners)}')
 
     executor.shutdown()
@@ -82,14 +82,15 @@ def banner_gen(json_path, threads_count):
             full.save(buffer, format="PNG")
             buffer.seek(0)
             image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-            print_with_flush(f"imagePreview_data:image/png;base64,{image_base64}")
+            print_with_flush(f"imagePreview|data:image/png;base64,{image_base64}")
             print_with_flush(f'progressBar:{len(blocks)+len(banners)-section_num}/{len(blocks)+len(banners)}')
 
     buffer = BytesIO()
     full.save(buffer, format="PNG")
     buffer.seek(0)
     image_base64 = base64.b64encode(buffer.read()).decode('utf-8')
-    print_with_flush(f"imagePreview_data:image/png;base64,{image_base64}")
+    print_with_flush(f"imagePreview|data:image/png;base64,{image_base64}")
+    print_with_flush(f"update-resolution:{resolution_width}|{resolution_height}")
 
     file_name = Path(json_path).stem
 

@@ -2,7 +2,7 @@ body {
     background-color: #0f111a;
     font-family: Arial, sans-serif;
     color: white;
-    margin: 8px 8px 0px 8px;
+    margin-bottom: 0px
 }
 
 .selectFile {
@@ -25,11 +25,20 @@ body {
     cursor: pointer;
     font-size: 16px;
     width: 100%;
-    width: auto;
 }
 
 button:hover {
     background-color: #ff4151;
+    color: #191c29;
+}
+
+button:hover {
+    background-color: #ff4151;
+    color: #191c29;
+}
+
+button:active {
+    background-color: #B22D38;
     color: #191c29;
 }
 
@@ -42,7 +51,6 @@ button:hover {
     cursor: pointer;
     font-size: 16px;
     width: 100%;
-    margin-top: 8px;
 }
 
 input {
@@ -84,29 +92,19 @@ input:focus-visible {
     padding: 15px 25px;
     background-color: #191c29;
     margin-top: 8px;
-    border-radius: 10px;
-}
-
-.giveCommand {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 25px;
-    background-color: #191c29;
-    margin-top: 8px;
+    margin-right: 8px;
     border-radius: 10px;
 }
 
 .progressBar {
     display: none;
-    padding: 15px 25px;
+    padding: 10px 10px;
     background-color: #191c29;
-    margin-top: 8px;
     border-radius: 10px;
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-    height: 82px;
+    height: 20px;
 }
 
 .unLoaded {
@@ -117,8 +115,6 @@ input:focus-visible {
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    margin-top: 8px;
-
 }
 
 .loaded {
@@ -130,7 +126,7 @@ input:focus-visible {
     align-items: flex-end;
     justify-content: center;
     position: relative;
-    bottom: 19px;
+    bottom: 20px;
     clip-path: inset(0 100% 0 0);
 }
 
@@ -140,12 +136,12 @@ input:focus-visible {
     padding: 15px 25px;
     background-color: #191c29;
     margin-top: 8px;
+    margin-right: 8px;
     border-radius: 10px;
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
 }
-
 
 .range {
     margin-top:8px;
@@ -153,6 +149,7 @@ input:focus-visible {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .rangeNums {
@@ -165,6 +162,11 @@ input:focus-visible {
 
 .descriptionCheckbox {
     max-width: 80%;
+    display: grid;
+}
+
+.descriptionRange {
+    display: grid;
 }
 
 .toggle {
@@ -216,12 +218,13 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-#threadsNumber {
+.sliderNumber {
     width: 48px;
     background: #252939;
 }
 
 .imageSelector {
+    margin-top: 4px;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -229,27 +232,22 @@ input::-webkit-inner-spin-button {
 
 .saveButtons {
     display: none;
-    align-items: center;
+    align-items: normal;
     flex-direction: row;
 }
 
 .bottomButtons {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    float: right;
     margin-top: 8px;
 }
 
 #images {
-    aspect-ratio: 0 / 0;
     display: grid;
-    grid-template-columns: auto;
-    position: absolute;
     width: -webkit-fill-available;
-    top: 8px;
+    height: 0px;
+    position: absolute;
+    top: 72px;
     margin-right: 8px;
-    height: 1px;
-    z-index: -1;
 }
 
 .banner {
@@ -268,6 +266,7 @@ input::-webkit-inner-spin-button {
     position: relative;
     z-index: -1;
     background-color: #191c29;
+    border-radius: 10px;
 }
 
 #forBG {
@@ -283,7 +282,6 @@ input::-webkit-inner-spin-button {
     justify-content: space-around;
     padding: 15px 0px;
     background-color: #191c29;
-    margin-top: 8px;
     border-radius: 10px;
 }
 
@@ -325,8 +323,12 @@ input::-webkit-inner-spin-button {
     justify-content: space-between;
     padding: 15px 25px;
     background-color: #191c29;
-    margin-top: 8px;
     border-radius: 10px;
+    margin-top: 8px;
+}
+
+.craftBanners {
+    margin-right: 8px;
 }
 
 .links {
@@ -335,4 +337,183 @@ input::-webkit-inner-spin-button {
 
 .link {
     margin-right: 8px
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #191c29;
+    margin-bottom: 8px;
+    border-radius: 10px;
+}
+
+.left-header {
+    width: calc(100% - 385px);
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-side {
+    width: calc(100% - 400px);
+}
+
+.right-side {
+    width: 392px;
+    margin-left: 8px;
+    height: 0px;
+}
+
+.settings {
+    height: calc(100vh - 128px);
+    overflow-y: auto;
+}
+
+.settings-sub {
+    border-radius: 10px;
+    border-width: 0px;
+    position: absolute;
+    width: 374px;
+    height: calc(100vh - 128px);
+    box-shadow: 0 0 0 100px;
+    clip-path: inset(0 0);
+    color: #0f111a;
+}
+
+.both-sides {
+    display: flex;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #252939;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #fff;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ebebeb;
+}
+
+.i2b {
+    display: flex;
+    align-items: center;
+}
+
+.dropbtn {
+    height: 35px;
+    background-color: #252939;
+    width: auto;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #252939;
+  min-width: 160px;
+  z-index: 1;
+  padding: 8px 8px;
+  right:0px;
+  border-radius: 10px;
+}
+
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+}
+
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #ff4151;
+    color: #191c29;
+}
+
+#jsonSelected {
+    position: absolute;
+    bottom: 37%;
+    left: 30px;
+    font-size: 4em;
+}
+
+.json-div {
+    position: absolute;
+    width: calc(100% - 416px);
+    height: 80vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.saveAsImgDiv {
+    background-color: #252939;
+    position: absolute;
+    display: none;
+    padding: 15px 25px;
+    width: auto;
+    bottom: 60px;
+    left: 15px;
+    border-radius: 10px;
+    width: calc(100% - 480px);
+}
+
+#saveAsImg:hover + .saveAsImgDiv {
+    display:flex;
+}
+
+.saveAsJSONDiv {
+    background-color: #252939;
+    position: absolute;
+    display: none;
+    padding: 15px 25px;
+    width: auto;
+    bottom: 60px;
+    left: 15px;
+    border-radius: 10px;
+    width: calc(100% - 480px);
+}
+
+#saveAsJSON:hover + .saveAsJSONDiv {
+    display:flex;
+}
+
+.saveAsNBTDiv {
+    background-color: #252939;
+    position: absolute;
+    display: none;
+    padding: 15px 25px;
+    width: auto;
+    bottom: 60px;
+    left: 15px;
+    border-radius: 10px;
+    width: calc(100% - 480px);
+}
+
+#saveAsNBT:hover + .saveAsNBTDiv {
+    display:flex;
 }

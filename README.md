@@ -1,6 +1,6 @@
 # Image2Banners
 ## Description
-This app takes images and converts them into complex banners, And show craft steps for each banner. You also can save it as JSON file, so you don't have to regenerate complex banners from image each time.
+This app takes images and converts them into complex banners, And shows crafting steps for each banner, or saves as NBT to build using a structure block. You can also save them as JSON file, so you don't have to regenerate complex banners from the image each time.
 ## How to install
 ### For Windows
 In the Releases section, find Image2Banners X.X.X and download Image2Banners-win32-x64.zip. Unzip the file and open Image2Banners.exe.

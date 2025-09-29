@@ -2,14 +2,15 @@ const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
 const { imageSize } = require('image-size');
+const fs = require("fs");
 
 let mainWindow;
 let pythonProcess;
 
 app.whenReady().then(() => {
     mainWindow = new BrowserWindow({
-        width: 450,
-        height: 885,
+        width: 1000,
+        height: 669,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -49,7 +50,14 @@ app.whenReady().then(() => {
         if (!result.canceled && result.filePaths.length > 0) {
             const filePath = result.filePaths[0];
             const fileExtension = path.extname(filePath).toLowerCase().slice(1);
+
             if (fileExtension=="json") {
+                    const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+                    const [width, height] = data.resolution.map(Number);
+                    const greatestCommonDivisor = gcd(width, height);
+                    const widthRatio = width / greatestCommonDivisor;
+                    const heightRatio = height / greatestCommonDivisor;
+                    mainWindow.webContents.send('update-default-resolution', [widthRatio, heightRatio]);
                 return [fileExtension, filePath];
             }
 
@@ -65,6 +73,17 @@ app.whenReady().then(() => {
             const widthRatio = width / greatestCommonDivisor;
             const heightRatio = height / greatestCommonDivisor;
 
+            let window_height = mainWindow.getSize()[1];
+            let ratio = widthRatio/heightRatio;
+            if (ratio>2) {
+                ratio=2;
+            }
+            if (ratio<1) {
+                ratio=1;
+            }
+            let new_size = Math.round(ratio * window_height * 0.76+424);
+            mainWindow.setSize(new_size, window_height);
+
             mainWindow.webContents.send('update-default-resolution', [widthRatio, heightRatio]);
 
             return [fileExtension, filePath];
@@ -79,12 +98,12 @@ app.whenReady().then(() => {
         for (let i = 0; i < lstPythonOutput.length; i++) {
             let pythonData = lstPythonOutput[i];
             if (pythonData.includes('imagePreview')) {
-                const data = pythonData.split('_');
+                const data = pythonData.split('|');
                 let imgData = data[1]
                 mainWindow.webContents.send('update-image-preview', imgData);
             } else if (pythonData.includes('bannerPreview')) {
                 const data = pythonData.split('bannerPreview');
-                let bannerData = data[1].split('_')
+                let bannerData = data[1].split('|')
                 mainWindow.webContents.send('update-banner', bannerData);
             } else if (pythonData.includes('progressBar')) {
                 const data = pythonData.split(':');
@@ -98,11 +117,42 @@ app.whenReady().then(() => {
                 const resultData = pythonData.split('|');
                 mainWindow.webContents.send('final-result', resultData);
             } else if (pythonData.includes('Steps')) {
-                const stepsData = pythonData.split('_');
+                const stepsData = pythonData.split('|');
                 mainWindow.webContents.send('create-steps', stepsData);
                 mainWindow.webContents.send('update-steps', stepsData);
+            } else if (pythonData.includes('update-resolution')) {
+                const data = pythonData.split(':');
+                const resolutionData = data[1].split('|');
+                console.log(resolutionData)
+                mainWindow.webContents.send('update-resolution', resolutionData);
             }
         }
+    });
+
+    ipcMain.on('resize-window', async (event, resolutionWidth, resolutionHeight) => {
+        let height = mainWindow.getSize()[1];
+        let ratio = resolutionWidth/resolutionHeight;
+        if (ratio>2) {
+            ratio=2;
+        }
+        if (ratio<1) {
+            ratio=1;
+        }
+        let new_size = Math.round(ratio * height * 0.76+16);
+        mainWindow.setSize(new_size, height);
+    });
+
+    ipcMain.on('resize-window-gen', async (event, resolutionWidth, resolutionHeight) => {
+        let height = mainWindow.getSize()[1];
+        let ratio = resolutionWidth/resolutionHeight;
+        if (ratio>2) {
+            ratio=2;
+        }
+        if (ratio<1) {
+            ratio=1;
+        }
+        let new_size = Math.round(ratio * height * 0.76+424);
+        mainWindow.setSize(new_size, height);
     });
 
     ipcMain.on('send_data', async (event, data) => {

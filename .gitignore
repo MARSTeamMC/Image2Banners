@@ -6,3 +6,4 @@ package/
 build/
 dist/
 generated/
+config.json

@@ -1,0 +1,37 @@
+{
+  "jsonSelected": "JSON Selected",
+
+  "selectFileButton": "Select Image / JSON",
+  "generateBanners": "Generate Banners",
+  "bannerCoords": "Select the coordinates of the banner you want to craft.",
+
+  "saveAsImg": "Save As Image",
+  "saveAsImgDesc": "Saves generated banners as an image in Image2Banners /generated /images.",
+  "saveAsJSON": "Save As JSON",
+  "saveAsJSONDesc": "Saves generated banners as JSON in Image2Banners /generated /json, so there's no need to regenerate the image again later.",
+  "saveAsNBT": "Save As NBT",
+  "saveAsNBTDesc": "Saves generated banners as NBT in Image2Banners /generated /nbt. This file can be used to export banners into Minecraft using a structure block. Put this file into {minecraft_folder} /saves /{your_world} /generated /i2b /structures/ and, in a structure block, write i2b:{your_nbt_file_name} (don't put .nbt after the name).",
+
+  "generateBlocks": "Generate Blocks",
+  "generateBlocksDesc": "Generate blocks behind banners?",
+
+  "generateLayeredBanners": "Generate Layered Banners",
+  "generateLayeredBannersDesc": "Generate banners that will appear behind the lower part of the banner?",
+
+  "generateComplexBanners": "Generate Banners with 6+ Patterns",
+  "generateComplexBannersDesc": "Should banners with more than 6 patterns be generated? They can't be crafted, only obtained through commands.",
+
+  "usePatternItems": "Use Banner Pattern Items",
+  "usePatternItemsDesc": "Can banners use pattern items such as the Thing, Globe, and Snout?",
+
+  "threadsCount": "Thread Count",
+  "threadsCountDesc": "The number of threads the program can use.",
+
+  "compareMethod": "Compare Method",
+  "compareMethodDesc": "How strong will the new method of comparing images be over the old one? (Recommended value: 90)",
+
+  "loading_0": "Loading...",
+  "loading_1": "Loading...",
+
+  "language": "Language"
+}

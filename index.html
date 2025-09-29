@@ -3,140 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image2Banner</title>
+    <title>Image2Banners</title>
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-<div>
-    <img width="100%" id="imagePreview" alt="Selected Image" src="assets/selectImage.png"/>
-</div>
-<div id="images">
-</div>
-<div id="forBG">
-    <div class="imageSelector">
-        <button class="selectFile" id="selectFile">Select Image / Json</button>
-        <div class="resolution">
-            <input class="width" type="number">
-            <span>x</span>
-            <input class="height" type="number">
+<div class="header">
+    <div class="i2b">
+        <img src="assets\i2b-logo.png" style="margin-right: 8px" width="35px">
+        <h1 style="margin: 0px">Image2Banners</h1>
+    </div>
+    <div class="links">
+        <a class="link" href="https://youtube.com/@MARSTeamMC"><img src="assets\yt-logo.png" width="38px"></a>
+        <a class="link" href="https://x.com/MARSTeamMC"><img src="assets\tw-logo.png" width="38px"></a>
+        <a class="link" href="https://github.com/MARSTeamMC"><img src="assets\gth-logo.png" width="38px"></a>
+        <a class="link" href="https://discord.gg/bYXrZ7aQWn"><img src="assets\ds-logo.png" width="38px"></a>
+    </div>
+    <div class="dropdown">
+        <button class="button dropbtn" id="language">Language</button>
+        <div class="dropdown-content">
+            <button class="button" data-lang="en-US" onclick="setLanguage(this.dataset.lang)">English</button>
+            <button class="button" data-lang="ru-RU" style="margin-top:8px" onclick="setLanguage(this.dataset.lang)">Русский</button>
         </div>
     </div>
-
-    <div class="progressBar">
-    <span class="descriptionRange">Generating Banners...<br>
-        <small>Do not close app until the generation is complete.</small>
-    </span>
-        <div class="unLoaded">Loading...</div>
-        <div class="loaded">Loading...</div>
+</div>
+<div class="both-sides">
+    <div class="left-side">
+        <div id="images"></div>
+        <div>
+            <div class="json-div">
+                <h1 id="jsonSelected" style="font-size: 3em;">JSON Selected</h1>
+            </div>
+            <img width="100%" id="imagePreview" alt="Selected Image" src="assets/block.png"/>
+        </div>
+        <div class="imageSelector">
+            <button class="button" id="selectFileButton">Select Image / JSON</button>
+            <div class="resolution">
+                <input class="width" type="number">
+                <span>x</span>
+                <input class="height" type="number">
+            </div>
+        </div>
+        <div class="progressBar">
+            <div id="loading_0" class="unLoaded">Loading...</div>
+            <div id="loading_1" class="loaded">Loading...</div>
+        </div>
+        <div class="saveButtons">
+            <button id="saveAsImg" class="saveButton">Save As Image</button>
+            <div class="saveAsImgDiv">
+                    <span id="saveAsImgDesc" style="width: -webkit-fill-available;">saveAsImgDesc</span>
+            </div>
+            <button id="saveAsJSON" style="margin-left:8px" class="saveButton">Save As Json</button>
+            <div class="saveAsJSONDiv">
+                    <span id="saveAsJSONDesc" style="width: -webkit-fill-available;">saveAsJSONDesc</span>
+            </div>
+            <button id="saveAsNBT" style="margin-left:8px" class="saveButton">Save As NBT</button>
+            <div class="saveAsNBTDiv">
+                    <span id="saveAsNBTDesc" style="width: -webkit-fill-available;">saveAsNBTDesc</span>
+            </div>
+        </div>
     </div>
+    <div class="right-side">
+        <div class="settings">
+            <div class="settings-sub"></div>
+            <div style="margin-top: 0px" class="settingCheckbox">
+                <div class="descriptionCheckbox">
+                    <span id="generateBlocks" class="descriptionCheckbox">Generate Blocks</span>
+                    <small id="generateBlocksDesc">Generate blocks behind banners?</small>
+                </div>
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="toggle"></div>
+                </label>
+            </div>
+            <div class="settingCheckbox">
+                <div class="descriptionCheckbox">
+                    <span id="generateLayeredBanners">Generate Layered Banners</span>
+                    <small id="generateLayeredBannersDesc">Generate banners that will appear behind the lower part of the
+                        banner?</small>
+                </div>
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="toggle"></div>
+                </label>
+            </div>
+            <div class="settingCheckbox">
+                <div class="descriptionCheckbox">
+                    <span id="generateComplexBanners">Generate Banners With 6+ Patterns</span>
+                    <small id="generateComplexBannersDesc">Should banners with more than 6 patterns be generated? They can't
+                        be crafted, only obtained through commands.</small>
+                </div>
+                <label>
+                    <input type="checkbox">
+                    <div class="toggle"></div>
+                </label>
+            </div>
+            <div class="settingCheckbox">
+                <div class="descriptionCheckbox">
+                    <span id="usePatternItems">Use Pattern Items</span>
+                    <small id="usePatternItemsDesc">Can banners use pattern items, such as the thing, globe, etc.?</small>
+                </div>
+                <label>
+                    <input type="checkbox">
+                    <div class="toggle"></div>
+                </label>
+            </div>
+            <div class="settingRange">
+                <div class="descriptionRange">
+                    <span id="threadsCount" class="descriptionRange">Threads Count</span>
+                    <small id="threadsCountDesc">The number of threads a program can use.</small>
+                </div>
+                <div class="range">
+                    <input type="range" id="threadsRange" class="slider" min="1" max="1" value="1"
+                           oninput="this.nextElementSibling.value = this.value">
+                    <input type="number" id="threadsNumber" class="slider-value sliderNumber" value="1" step="1" max="1"
+                           oninput="this.previousElementSibling.value = this.value">
+                </div>
+                <div class="rangeNums">
+                    <small>1</small>
+                    <small id="maxThreadsRange">1</small>
+                </div>
+            </div>
+            <div class="settingRange">
+                <div class="descriptionRange">
+                    <span id="compareMethod" class="descriptionRange">Compare Method</span>
+                    <small id="compareMethodDesc">How strong will the new method of comparing images be over the old one?
+                        (Recommended value: 90)</small>
+                </div>
+                <div class="range">
+                    <input type="range" id="compareMethodRange" class="slider" min="0" max="100" value="90" step="1"
+                           oninput="this.nextElementSibling.value = this.value">
+                    <input type="number" id="compareMethodNumber" class="slider-value sliderNumber" value="90" step="1"
+                           max="100"
+                           oninput="this.previousElementSibling.value = this.value">
+                </div>
+                <div class="rangeNums">
+                    <small>0</small>
+                    <small>100</small>
+                </div>
+            </div>
 
 
-    <div class="saveButtons">
-        <button id="saveAsImg" class="saveButton">Save As Image</button>
-        <button id="saveAsJson" style="margin-left:8px" class="saveButton">Save As Json</button>
-    </div>
-    <div class="craftBanners">
+            <div class="craftBanners">
+                <div class="bannerAndBlock">
+                    <div class="BannerInfo">
+                        <p style="margin: 0px">Banner</p>
+                        <img src="assets/banner.png" width="100%" alt="">
+                    </div>
+                    <div class="BlockInfo">
+                        <p style="margin: 0px; height: 55px">-</p>
+                        <img src="assets/block.png" style="max-width: 100px" width="100%" alt="">
+                    </div>
+                </div>
+                <div class="craftStep" id="craftStepSample">
+                    <div class="BannerInfo">
+                        <p style="margin: 0px; height: 55px"></p>
+                        <img src="assets/banner.png" width="100%" alt="">
+                    </div>
+                    <div class="BannerInfo">
+                        <p id="BannerInfoAdd" style="margin: 0px; height: 54px">-</p>
+                        <img src="assets/banner.png" width="100%" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="craftBannersCoords">
-        <span class="descriptionCheckbox">Select the coordinates of the banner you want to craft.</span>
+            <span id="bannerCoords" class="descriptionCheckbox">Select the coordinates of the banner you want to craft.</span>
             <div class="coords">
                 <input id="x_coord" type="number" min="0" max="0" value="0">
                 <span>x</span>
                 <input id="y_coord" type="number" min="0" max="0" value="0">
             </div>
         </div>
-        <div class="giveCommand">
-        <span class="descriptionCheckbox">Command to obtain a banner:<br>
-            <small>/give @p minecraft:banner</small>
-        </span>
+        <div class="bottomButtons">
+            <button id="generateBanners" class="button">Generate Banners</button>
         </div>
-        <div class="bannerAndBlock">
-            <div class="BannerInfo">
-                <p style="margin: 0px">Banner</p>
-                <img src="assets/banner.png" width="100%" alt="">
-            </div>
-            <div class="BlockInfo">
-                <p style="margin: 0px; height: 55px">andesite</p>
-                <img src="assets/block.png" style="max-width: 100px" width="100%" alt="">
-            </div>
-        </div>
-        <div class="craftStep" id="craftStepSample">
-            <div class="BannerInfo">
-                <p style="margin: 0px; height: 55px"></p>
-                <img src="assets/banner.png" width="100%" alt="">
-            </div>
-            <div class="BannerInfo">
-                <p style="margin: 0px; height: 54px">Add</p>
-                <img src="assets/banner.png" width="100%" alt="">
-            </div>
-        </div>
-    </div>
-
-
-    <div class="settingCheckbox">
-    <span class="descriptionCheckbox">Generate Blocks<br>
-        <small>Generate blocks behind banners?</small>
-    </span>
-        <label>
-            <input type="checkbox" checked>
-            <div class="toggle"></div>
-        </label>
-    </div>
-    <div class="settingCheckbox">
-    <span class="descriptionCheckbox">Generate Layered Banners<br>
-        <small>Generate banners that will appear behind the lower part of the banner?</small>
-    </span>
-        <label>
-            <input type="checkbox" checked>
-            <div class="toggle"></div>
-        </label>
-    </div>
-    <div class="settingCheckbox">
-    <span class="descriptionCheckbox">Generate Banners With 6+ Patterns<br>
-        <small>Should banners with more than 6 patterns be generated? They can't be crafted, only obtained through commands.</small>
-    </span>
-        <label>
-            <input type="checkbox">
-            <div class="toggle"></div>
-        </label>
-    </div>
-    <div class="settingCheckbox">
-    <span class="patternsBannerItems">Use Pattern Banners Items<br>
-        <small>Can banners use pattern items, such as the thing, globe, etc.?</small>
-    </span>
-        <label>
-            <input type="checkbox">
-            <div class="toggle"></div>
-        </label>
-    </div>
-    <div class="settingRange">
-    <span class="descriptionRange">Threads Count<br>
-        <small>The number of threads a program can use.</small>
-    </span>
-        <div class="range">
-            <input type="range" id="threadsRange" class="slider" min="1" max="1" value="1"
-                   oninput="this.nextElementSibling.value = this.value">
-            <input type="number" id="threadsNumber" class="slider-value" value="1" step="1" max="1"
-                   oninput="this.previousElementSibling.value = this.value">
-        </div>
-        <div class="rangeNums">
-            <small>1</small>
-            <small id="maxThreadsRange">1</small>
-        </div>
-
-    </div>
-    <div class="bottomButtons">
-        <div class="links">
-            <a class="link" href="https://youtube.com/@MARSTeamMC"><img src="assets\yt-logo.png" width="38px"></a>
-            <a class="link" href="https://x.com/MARSTeamMC"><img src="assets\tw-logo.png" width="38px"></a>
-            <a class="link" href="https://github.com/MARSTeamMC"><img src="assets\gth-logo.png" width="38px"></a>
-            <a class="link" href="https://discord.gg/bYXrZ7aQWn"><img src="assets\ds-logo.png" width="38px"></a>
-        </div>
-        <button id="generateBanners" class="button">Generate Banners</button>
     </div>
 </div>
 
 <script>
     const { ipcRenderer, shell } = require('electron');
+
+    ipcRenderer.send('resize-window-gen', 1, 1);
 
     const threadsCount = navigator.hardwareConcurrency;
     document.getElementById('threadsRange').max = threadsCount;
@@ -147,17 +194,25 @@
 
     let file_path = 'none';
 
-    document.getElementById('selectFile').addEventListener('click', async () => {
+    document.getElementById('selectFileButton').addEventListener('click', async () => {
         const data = await ipcRenderer.invoke('select-file');
         const fileFormat = data[0];
         filePath = data[1];
         if (fileFormat=='json') {
-            document.getElementById('imagePreview').src = 'assets/jsonSelected.png';
+            ipcRenderer.send('resize-window-gen', 1, 1);
+            document.getElementById('imagePreview').src = 'assets/block.png';
+            document.querySelectorAll('.json-div')[0].style.display = 'flex';
             document.querySelectorAll('.settingCheckbox').forEach(element => {
               element.style.display = 'none';
             });
+            document.querySelectorAll('.settingRange').forEach((element, index) => {
+              if (index !== 0) {
+                element.style.display = 'none';
+              }
+            });
             document.querySelectorAll('.resolution')[0].style.display = 'none';
         } else {
+            document.querySelectorAll('.json-div')[0].style.display = 'none';
             document.getElementById('imagePreview').src = filePath;
             document.querySelectorAll('.settingCheckbox').forEach(element => {
               element.style.display = 'flex';
@@ -180,7 +235,7 @@
         ipcRenderer.send('send_data', data);
     });
 
-    document.getElementById('saveAsJson').addEventListener('click', async () => {
+    document.getElementById('saveAsJSON').addEventListener('click', async () => {
         const operation = 'save_as_json';
         const resolutionInputs = document.querySelectorAll('.resolution input');
         const resolutionWidth = resolutionInputs[0].value;
@@ -194,55 +249,80 @@
         ipcRenderer.send('send_data', data);
     });
 
-    document.getElementById('generateBanners').addEventListener('click', async () => {
+    document.getElementById('saveAsNBT').addEventListener('click', async () => {
+        const operation = 'save_as_nbt';
         const resolutionInputs = document.querySelectorAll('.resolution input');
         const resolutionWidth = resolutionInputs[0].value;
         const resolutionHeight = resolutionInputs[1].value;
 
-        const checkboxes = document.querySelectorAll('.settingCheckbox input[type="checkbox"]');
-        const generateBlocks = checkboxes[0].checked;
-        const generateLayeredBanners = checkboxes[1].checked;
-        const generateBigBanners = checkboxes[2].checked;
-        const usePatternItems = checkboxes[3].checked;
-
-        const rangeInputs = document.querySelectorAll('.settingRange input[type="range"]');
-        const threadsCount = rangeInputs[0].value;
-
-        document.querySelectorAll('.settingCheckbox').forEach(element => {
-            element.style.display = 'none';
-        });
-        document.querySelectorAll('.settingRange').forEach(element => {
-            element.style.display = 'none';
-        });
-        document.querySelectorAll('.resolution')[0].style.display = 'none';
-        document.querySelectorAll('.selectFile')[0].style.display = 'none';
-        document.getElementById('generateBanners').style.display = 'none';
-        document.querySelectorAll('.progressBar')[0].style.display = 'flex';
-
-        const operation = 'generate';
-
         const data = {
             operation,
-            filePath: encodeURI(filePath),
-            resolution: [resolutionWidth, resolutionHeight],
-            generateBlocks,
-            generateLayeredBanners,
-            generateBigBanners,
-            usePatternItems,
-            threadsCount
+            resolution: [resolutionWidth, resolutionHeight]
         };
 
         ipcRenderer.send('send_data', data);
+    });
 
-        for (let i = 0; i < resolutionWidth*2 * Math.round(resolutionHeight / 2)/2; i++) {
-            var ban = document.createElement("img");
-            ban.id = i;
-            ban.src = 'assets/banner.png'
-            ban.classList.add("banner");
-            ban.style.bottom = (6+6.5*Math.floor(i/resolutionWidth)).toString()+'%';
-            var src = document.getElementById("images");
-            src.style.gridTemplateColumns = 'auto '.repeat(resolutionWidth);
-            src.appendChild(ban);
+    document.getElementById('generateBanners').addEventListener('click', async () => {
+        if (filePath!='assets/block.png') {
+            const resolutionInputs = document.querySelectorAll('.resolution input');
+            const resolutionWidth = resolutionInputs[0].value;
+            const resolutionHeight = resolutionInputs[1].value;
+
+            const checkboxes = document.querySelectorAll('.settingCheckbox input[type="checkbox"]');
+            const generateBlocks = checkboxes[0].checked;
+            const generateLayeredBanners = checkboxes[1].checked;
+            const generateBigBanners = checkboxes[2].checked;
+            const usePatternItems = checkboxes[3].checked;
+
+            const rangeInputs = document.querySelectorAll('.settingRange input[type="range"]');
+            const threadsCount = rangeInputs[0].value;
+            const compareMethod = rangeInputs[1].value;
+
+            document.querySelectorAll('.settingCheckbox').forEach(element => {
+                element.style.display = 'none';
+            });
+            document.querySelectorAll('.settingRange').forEach(element => {
+                element.style.display = 'none';
+            });
+            document.querySelectorAll('.resolution')[0].style.display = 'none';
+            document.querySelectorAll('#selectFileButton')[0].style.display = 'none';
+            document.getElementById('generateBanners').style.display = 'none';
+            document.querySelectorAll('.progressBar')[0].style.display = 'block';
+            document.querySelectorAll('.right-side')[0].style.display = 'none';
+            document.querySelectorAll('.left-side')[0].style.width = '100%';
+            document.querySelectorAll('.json-div')[0].style.display = 'none';
+            document.querySelectorAll('.links')[0].style.display = 'none';
+
+
+            ipcRenderer.send('resize-window', resolutionWidth, resolutionHeight);
+
+            const operation = 'generate';
+
+            const data = {
+                operation,
+                filePath: encodeURI(filePath),
+                resolution: [resolutionWidth, resolutionHeight],
+                generateBlocks,
+                generateLayeredBanners,
+                generateBigBanners,
+                usePatternItems,
+                threadsCount,
+                compareMethod
+            };
+
+            ipcRenderer.send('send_data', data);
+
+            for (let i = 0; i < resolutionWidth*2 * Math.round(resolutionHeight / 2)/2; i++) {
+                var ban = document.createElement("img");
+                ban.id = i;
+                ban.src = 'assets/banner.png'
+                ban.classList.add("banner");
+                ban.style.bottom = (6+6.5*Math.floor(i/resolutionWidth)).toString()+'%';
+                var src = document.getElementById("images");
+                src.style.gridTemplateColumns = 'auto '.repeat(resolutionWidth);
+                src.appendChild(ban);
+            }
         }
     });
 
@@ -254,6 +334,12 @@
         const loaded = document.querySelectorAll('.loaded')[0];
         loaded.textContent = text;
         loaded.style.clipPath = 'inset(0 '+(100-parseInt(text.split('/')[0])/parseInt(text.split('/')[1])*100).toString()+'% 0 0)';
+
+        let imgHeight = document.getElementById('imagePreview').offsetHeight;
+        let bannersHeight = document.getElementById('images').offsetHeight;
+
+        let clip = bannersHeight-imgHeight;
+        document.getElementById('images').style.clipPath = `inset(0 0 ${clip}px 0)`;
     });
 
     ipcRenderer.on('update-on-generated', (event) => {
@@ -261,10 +347,20 @@
         document.querySelectorAll('.saveButtons')[0].style.display = 'flex';
         document.querySelectorAll('.bannerAndBlock')[0].style.display = 'flex';
         document.querySelectorAll('.craftBannersCoords')[0].style.display = 'flex';
-        document.querySelectorAll('.giveCommand')[0].style.display = 'flex';
+        document.querySelectorAll('.right-side')[0].style.display = 'block';
+        document.querySelectorAll('.left-side')[0].style.width = 'calc(100% - 400px)';
+        document.querySelectorAll('.settings')[0].style.height = 'calc(100vh - 158px)';
+        document.querySelectorAll('.settings-sub')[0].style.height = 'calc(100vh - 158px)';
         document.querySelectorAll('.banner').forEach(function(a) {
           a.remove();
         })
+        document.querySelectorAll('.links')[0].style.display = 'flex';
+
+        const resolutionInputs = document.querySelectorAll('.resolution input');
+        const resolutionWidth = resolutionInputs[0].value;
+        const resolutionHeight = resolutionInputs[1].value;
+
+        ipcRenderer.send('resize-window-gen', resolutionWidth, resolutionHeight);
 
         const operation = 'steps';
         const id = '(0,0)';
@@ -331,6 +427,14 @@
         p[1].textContent = pattern_name;
     });
 
+    ipcRenderer.on('update-resolution', (event, data) => {
+        const width = data[0];
+        const height = data[1];
+        const resolutionInputs = document.querySelectorAll('.resolution input');
+        resolutionInputs[0].value = width;
+        resolutionInputs[1].value = height;
+    });
+
     ipcRenderer.on('final-result', (event, data) => {
         const banner_img = data[1];
         const block = data[2];
@@ -339,11 +443,9 @@
         const result = document.querySelectorAll('.bannerAndBlock')[0];
         const bannerInfo = result.querySelectorAll('.BannerInfo')[0];
         const blockInfo = result.querySelectorAll('.BlockInfo')[0];
-        const giveCommand = document.querySelectorAll('.giveCommand')[0];
         bannerInfo.querySelectorAll('img')[0].src = banner_img;
         blockInfo.querySelectorAll('img')[0].src = block_img;
         blockInfo.querySelectorAll('p')[0].textContent = block;
-        giveCommand.querySelectorAll('small')[0].innerText = command;
     });
 
     document.getElementById('x_coord').addEventListener('change', async () => {
@@ -370,6 +472,7 @@
         ipcRenderer.send('send_data', data);
     });
 </script>
+<script src="lang.js"></script>
 
 </body>
 </html>
