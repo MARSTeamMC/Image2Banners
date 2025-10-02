@@ -10,7 +10,7 @@
   "saveAsJSON": "Save As JSON",
   "saveAsJSONDesc": "Saves generated banners as JSON in Image2Banners /generated /json, so there's no need to regenerate the image again later.",
   "saveAsNBT": "Save As NBT",
-  "saveAsNBTDesc": "Saves generated banners as NBT in Image2Banners /generated /nbt. This file can be used to export banners into Minecraft using a structure block. Put this file into {minecraft_folder} /saves /{your_world} /generated /i2b /structures/ and, in a structure block, write i2b:{your_nbt_file_name} (don't put .nbt after the name).",
+  "saveAsNBTDesc": "Saves generated banners as NBT in Image2Banners /generated /nbt. This file can be used to export banners into Minecraft using a structure block. Put this file into {minecraft_folder} /saves /{your_world} /generated /i2b /structures/ and, in a structure block, write i2b:{your_nbt_file_name} (don't put .nbt after the name). The structure block doesn't represent the real size if banners are larger than 32x32, due to Minecraft's limitations.",
 
   "generateBlocks": "Generate Blocks",
   "generateBlocksDesc": "Generate blocks behind banners?",

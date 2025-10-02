@@ -21,8 +21,8 @@ def nbt_gen(file_name, width, height, blocks, banners, banners_blocks, coords):
         f.write(b"size")
         f.write(struct.pack(">B", 3))  # contains TAG_Int
         f.write(struct.pack(">i", 3))  # list length
-        f.write(struct.pack(">i", width))  # x
-        f.write(struct.pack(">i", height))  # y
+        f.write(struct.pack(">i", width if width<32 else 32))  # x
+        f.write(struct.pack(">i", height if height<32 else 32))  # y
         f.write(struct.pack(">i", 2))  # z
 
         # entities
