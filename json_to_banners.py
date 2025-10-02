@@ -19,6 +19,8 @@ def banner_gen(json_path, threads_count):
     with open(json_path, 'r', encoding='utf-8') as f:
         banner_json = json.load(f)
 
+    banner_json = replace_old_texture_names(banner_json)
+
     resolution = banner_json['resolution']
     resolution_width = int(resolution[0])
     resolution_height = int(resolution[1])
@@ -115,3 +117,18 @@ def process_section(c, section):
 
     return [c, coords, banner, block]
 
+
+def replace_old_texture_names(banner_json):
+    old_texture_names = {
+        "dried_kelp": "dried_kelp_block"
+    }
+
+    for part in banner_json.values():
+        print(part)
+        if "block" in part:
+            block = part["block"]
+
+            if block in old_texture_names.keys():
+                part["block"] = old_texture_names[block]
+
+    return banner_json
