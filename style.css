@@ -224,7 +224,7 @@ input::-webkit-inner-spin-button {
 }
 
 .imageSelector {
-    margin-top: 4px;
+    margin-top: 8px;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -267,6 +267,9 @@ input::-webkit-inner-spin-button {
     z-index: -1;
     background-color: #191c29;
     border-radius: 10px;
+    max-height: fit-content;
+    max-width: fit-content;
+    height: 100%;
 }
 
 #forBG {

@@ -29,7 +29,7 @@
 <div class="both-sides">
     <div class="left-side">
         <div id="images"></div>
-        <div>
+        <div style="width: 100%; height: calc(100vh - 129px)">
             <div class="json-div">
                 <h1 id="jsonSelected" style="font-size: 3em;">JSON Selected</h1>
             </div>
@@ -185,6 +185,11 @@
 
     ipcRenderer.send('resize-window-gen', 1, 1);
 
+    window.addEventListener("resize", () => {
+        let imgWidth = document.getElementById('imagePreview').clientWidth;
+        document.getElementById('images').style.width = imgWidth + "px";
+    });
+
     const threadsCount = navigator.hardwareConcurrency;
     document.getElementById('threadsRange').max = threadsCount;
     document.getElementById('threadsRange').value = threadsCount;
@@ -337,6 +342,9 @@
 
         let imgHeight = document.getElementById('imagePreview').offsetHeight;
         let bannersHeight = document.getElementById('images').offsetHeight;
+
+        let imgWidth = document.getElementById('imagePreview').clientWidth;
+        document.getElementById('images').style.width = imgWidth + "px";
 
         let clip = bannersHeight-imgHeight;
         document.getElementById('images').style.clipPath = `inset(0 0 ${clip}px 0)`;
