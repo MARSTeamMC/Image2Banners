@@ -234,6 +234,7 @@ input::-webkit-inner-spin-button {
     display: none;
     align-items: normal;
     flex-direction: row;
+    margin-top: 8px;
 }
 
 .bottomButtons {
@@ -519,4 +520,19 @@ input::-webkit-inner-spin-button {
 
 #saveAsNBT:hover + .saveAsNBTDiv {
     display:flex;
+}
+
+.giveCommand {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 25px;
+    background-color: #191c29;
+    margin-bottom: 8px;
+    border-radius: 10px;
+}
+
+.imgDiv {
+    width: 100%;
+    height: calc(100vh - 129px);
 }

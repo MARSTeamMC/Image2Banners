@@ -144,8 +144,11 @@ def steps(data):
     banner_steps[-1].save(buffer, format="PNG")
     buffer.seek(0)
     banner_result = base64.b64encode(buffer.read()).decode('utf-8')
+    print(banner_lst)
+    patterns = ','.join(['{color: "' + i.split('#')[0] + '", pattern: "' + i.split('#')[1] + '"}' for i in banner_lst[1:]])
+    command = f'/give @p minecraft:{banner_lst[0].replace("#wall_banner", "_banner")}[minecraft:banner_patterns=[' + patterns + ']]'
 
-    print_with_flush(f"StepsResult|data:image/png;base64,{banner_result}|{dict_banner[id]['block'].replace('_', ' ').replace('-', ' ').title()}|data:image/png;base64,{block_result}")
+    print_with_flush(f"StepsResult|data:image/png;base64,{banner_result}|{dict_banner[id]['block'].replace('_', ' ').replace('-', ' ').title()}|data:image/png;base64,{block_result}|{command}")
 
     for c, i in enumerate(banner_steps):
         buffer = BytesIO()

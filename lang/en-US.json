@@ -30,6 +30,8 @@
   "compareMethod": "Compare Method",
   "compareMethodDesc": "How strong will the new method of comparing images be over the old one? (Recommended value: 90)",
 
+  "giveCommand": "Command to obtain a banner:",
+
   "loading_0": "Loading...",
   "loading_1": "Loading...",
 

@@ -29,7 +29,7 @@
 <div class="both-sides">
     <div class="left-side">
         <div id="images"></div>
-        <div style="width: 100%; height: calc(100vh - 129px)">
+        <div class="imgDiv">
             <div class="json-div">
                 <h1 id="jsonSelected" style="font-size: 3em;">JSON Selected</h1>
             </div>
@@ -63,6 +63,10 @@
         </div>
     </div>
     <div class="right-side">
+        <div class="giveCommand">
+            <span id="giveCommand" class="descriptionCheckbox">Command to obtain a banner:</span>
+            <small>/give @p minecraft:banner</small>
+        </div>
         <div class="settings">
             <div class="settings-sub"></div>
             <div style="margin-top: 0px" class="settingCheckbox">
@@ -186,6 +190,16 @@
     ipcRenderer.send('resize-window-gen', 1, 1);
 
     window.addEventListener("resize", () => {
+        let buttonHeight;
+        if (document.querySelectorAll('.imageSelector')[0].style.display!='none') {
+            buttonHeight = document.querySelectorAll('.imageSelector')[0].clientHeight;
+        } else if (document.querySelectorAll('.progressBar')[0].style.display!='none') {
+            buttonHeight = document.querySelectorAll('.progressBar')[0].clientHeight;
+        } else {
+            buttonHeight = document.querySelectorAll('.saveButtons')[0].clientHeight;
+        }
+        document.querySelectorAll('.imgDiv')[0].style.height = `calc(100vh - ${buttonHeight}px - 91px)`;
+
         let imgWidth = document.getElementById('imagePreview').clientWidth;
         document.getElementById('images').style.width = imgWidth + "px";
     });
@@ -295,6 +309,7 @@
             document.getElementById('generateBanners').style.display = 'none';
             document.querySelectorAll('.progressBar')[0].style.display = 'block';
             document.querySelectorAll('.right-side')[0].style.display = 'none';
+            document.querySelectorAll('.imageSelector')[0].style.display = 'none';
             document.querySelectorAll('.left-side')[0].style.width = '100%';
             document.querySelectorAll('.json-div')[0].style.display = 'none';
             document.querySelectorAll('.links')[0].style.display = 'none';
@@ -356,9 +371,8 @@
         document.querySelectorAll('.bannerAndBlock')[0].style.display = 'flex';
         document.querySelectorAll('.craftBannersCoords')[0].style.display = 'flex';
         document.querySelectorAll('.right-side')[0].style.display = 'block';
+        document.querySelectorAll('.giveCommand')[0].style.display = 'flex';
         document.querySelectorAll('.left-side')[0].style.width = 'calc(100% - 400px)';
-        document.querySelectorAll('.settings')[0].style.height = 'calc(100vh - 158px)';
-        document.querySelectorAll('.settings-sub')[0].style.height = 'calc(100vh - 158px)';
         document.querySelectorAll('.banner').forEach(function(a) {
           a.remove();
         })
@@ -454,6 +468,11 @@
         bannerInfo.querySelectorAll('img')[0].src = banner_img;
         blockInfo.querySelectorAll('img')[0].src = block_img;
         blockInfo.querySelectorAll('p')[0].textContent = block;
+        const giveCommand = document.querySelectorAll('.giveCommand')[0];
+        giveCommand.querySelectorAll('small')[0].innerText = command;
+        let commandHeight = document.querySelectorAll('.giveCommand')[0].clientHeight;
+        document.querySelectorAll('.settings')[0].style.height = `calc(100vh - 166px - ${commandHeight}px)`;
+        document.querySelectorAll('.settings-sub')[0].style.height = `calc(100vh - 166px - ${commandHeight}px)`;
     });
 
     document.getElementById('x_coord').addEventListener('change', async () => {
