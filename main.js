@@ -81,8 +81,24 @@ app.whenReady().then(() => {
             if (ratio<1) {
                 ratio=1;
             }
-            let new_size = Math.round(ratio * window_height * 0.76+424);
-            mainWindow.setSize(new_size, window_height);
+            let new_width = Math.round(ratio * window_height * 0.76+424);
+            let new_height = window_height;
+
+            let bounds = mainWindow.getBounds();
+            let old_width = bounds.width;
+            let old_height = bounds.height;
+            let old_x = bounds.x;
+            let old_y = bounds.y;
+
+            let dx = (old_width - new_width) / 2;
+            let dy = (old_height - new_height) / 2;
+
+            mainWindow.setBounds({
+                x: Math.round(old_x + dx),
+                y: Math.round(old_y + dy),
+                width: new_width,
+                height: new_height
+            });
 
             mainWindow.webContents.send('update-default-resolution', [widthRatio, heightRatio]);
 
@@ -138,8 +154,24 @@ app.whenReady().then(() => {
         if (ratio<1) {
             ratio=1;
         }
-        let new_size = Math.round(ratio * height * 0.76+16);
-        mainWindow.setSize(new_size, height);
+        let new_width = Math.round(ratio * height * 0.76+16);
+        let new_height = height;
+
+        let bounds = mainWindow.getBounds();
+        let old_width = bounds.width;
+        let old_height = bounds.height;
+        let old_x = bounds.x;
+        let old_y = bounds.y;
+
+        let dx = (old_width - new_width) / 2;
+        let dy = (old_height - new_height) / 2;
+
+        mainWindow.setBounds({
+            x: Math.round(old_x + dx),
+            y: Math.round(old_y + dy),
+            width: new_width,
+            height: new_height
+        });
     });
 
     ipcMain.on('resize-window-gen', async (event, resolutionWidth, resolutionHeight) => {
@@ -151,8 +183,24 @@ app.whenReady().then(() => {
         if (ratio<1) {
             ratio=1;
         }
-        let new_size = Math.round(ratio * height * 0.76+424);
-        mainWindow.setSize(new_size, height);
+        let new_width = Math.round(ratio * height * 0.76+424);
+        let new_height = height;
+
+        let bounds = mainWindow.getBounds();
+        let old_width = bounds.width;
+        let old_height = bounds.height;
+        let old_x = bounds.x;
+        let old_y = bounds.y;
+
+        let dx = (old_width - new_width) / 2;
+        let dy = (old_height - new_height) / 2;
+
+        mainWindow.setBounds({
+            x: Math.round(old_x + dx),
+            y: Math.round(old_y + dy),
+            width: new_width,
+            height: new_height
+        });
     });
 
     ipcMain.on('send_data', async (event, data) => {
