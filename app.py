@@ -95,7 +95,6 @@ def jsn(data):
 def save_as_image(data):
     global image_banner, file_name
     Path("generated/images").mkdir(parents=True, exist_ok=True)
-    print(file_name)
     if f"{int(data['resolution'][0])}x{int(data['resolution'][1])}" in file_name:
         image_banner.save(f"generated/images/{file_name}.png")
     else:

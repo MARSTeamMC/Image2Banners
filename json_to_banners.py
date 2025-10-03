@@ -124,7 +124,6 @@ def replace_old_texture_names(banner_json):
     }
 
     for part in banner_json.values():
-        print(part)
         if "block" in part:
             block = part["block"]
 
