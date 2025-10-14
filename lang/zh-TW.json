@@ -1,0 +1,39 @@
+{
+  "jsonSelected": "已选择 JSON",
+
+  "selectFileButton": "选择图片 / JSON",
+  "generateBanners": "生成旗帜",
+  "bannerCoords": "请选择你要制作的旗帜大小(长宽)",
+
+  "saveAsImg": "保存为图片",
+  "saveAsImgDesc": "将生成的旗帜保存为图片，文件路径位于 Image2Banners/generated/images",
+  "saveAsJSON": "保存为 JSON",
+  "saveAsJSONDesc": "将生成的旗帜保存为 JSON，文件路径位于 Image2Banners/generated/json，无需再次生成图片",
+  "saveAsNBT": "保存为 NBT",
+  "saveAsNBTDesc": "将生成的旗帜保存为 NBT，文件路径位于 Image2Banners /generated /nbt 此文件可通过结构方块导入旗帜到 Minecraft 将文件放入 {我的世界文件夹} /saves /{你的世界存档} /generated /i2b /structures /，在结构方块中输入 i2b:{Nbt文件名称}（不要加 .nbt 后缀） 由于 Minecraft 的限制，结构方块并不能实现实际尺寸大于 32x32 的旗帜",
+
+  "generateBlocks": "生成方块",
+  "generateBlocksDesc": "是否在旗帜后方生成方块？",
+
+  "generateLayeredBanners": "生成多层图案旗帜",
+  "generateLayeredBannersDesc": "是否生成会显示在旗帜上的多个图案？",
+
+  "generateComplexBanners": "生成含 6+ 图案的旗帜",
+  "generateComplexBannersDesc": "是否生成含有超过 6 个图案的旗帜？这些旗帜无法合成，只能通过命令获得",
+
+  "usePatternItems": "使用旗帜图案物品",
+  "usePatternItemsDesc": "旗帜是否可以使用例如Mojang、地球、猪鼻等旗帜图案物品？",
+
+  "threadsCount": "线程数",
+  "threadsCountDesc": "程序可使用的线程数量",
+
+  "compareMethod": "比较方法",
+  "compareMethodDesc": "调整图像比较算法的敏感度，数值越高，算法更不注重精细对比；数值越低，算法更注重展现图片细节。（建议设置为90）",
+
+  "giveCommand": "获取旗帜的命令:",
+
+  "loading_0": "生成中...",
+  "loading_1": "加载中...",
+
+  "language": "语言选择"
+}
