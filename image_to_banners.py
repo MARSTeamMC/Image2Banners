@@ -194,7 +194,7 @@ def generate_blocks(image_rgb, part, compare_method):
     block_name = "polished_andesite"
 
     if image_rgb is None:
-        return block_name, Image.open(path + "polished_andesite.png")
+        return block_name, Image.open(f"{path}{block_name}.png").resize((22, 22))
 
     best_similarity_score = 0
 
