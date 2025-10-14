@@ -3,7 +3,7 @@
   "productName": "Image2Banners",
   "author": "MARS Team",
   "description": "Converts images into complex Minecraft banners.",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
