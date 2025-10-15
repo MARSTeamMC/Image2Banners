@@ -2,8 +2,9 @@ const fs = require("fs");
 const path = require("path");
 
 const DEFAULT_LOCALE = "en-US";
-const LANG_DIR = "lang";
+const LANG_DIR = path.join(__dirname, "lang");
 const CONFIG_FILE = path.join(__dirname, "config.json");
+const PACKAGE_FILE = path.join(__dirname, "package.json");
 const REMOTE_INDEX_URL = 'https://raw.githubusercontent.com/MARSTeamMC/Image2Banners/main/lang/index.json';
 
 let currentLocale = DEFAULT_LOCALE;
@@ -27,14 +28,14 @@ async function updateLanguages() {
         return;
     }
 
+    console.log(LANG_DIR);
+
     for (const [langCode, remoteUrl] of Object.entries(remoteIndex)) {
         let localData = null;
-        if (fs.existsSync(`lang/${langCode}.json`)) {
-            const response = await fetch(`lang/${langCode}.json`);
+        if (fs.existsSync(`${LANG_DIR}/${langCode}.json`)) {
+            const response = await fetch(`${LANG_DIR}/${langCode}.json`);
             localData = await response.json();
         }
-
-        console.log(localData)
 
         let remoteData;
         try {
@@ -55,11 +56,11 @@ async function updateLanguages() {
         remoteAppVersion = remoteData["appVersion"];
         remoteLangVersion = remoteData["langVersion"];
 
-        console.log(remoteLangVersion);
-        console.log(localLangVersion);
+        const app_response = await fetch(PACKAGE_FILE);
+        package = await app_response.json();
 
-        if (remoteLangVersion > localLangVersion && remoteAppVersion==localAppVersion) {
-            fs.writeFileSync(`lang/${langCode}.json`, JSON.stringify(remoteData, null, 2));
+        if ((remoteLangVersion > localLangVersion && remoteAppVersion==localAppVersion) || (localData == null && remoteAppVersion==package["version"])) {
+            fs.writeFileSync(`${LANG_DIR}/${langCode}.json`, JSON.stringify(remoteData, null, 2));
         }
     }
 }
@@ -68,7 +69,7 @@ async function loadLanguages() {
     const files = fs.readdirSync(LANG_DIR);
     for (const file of files) {
         if (file.endsWith(".json") && file!='index.json') {
-            const response = await fetch(`lang/${file}`);
+            const response = await fetch(`${LANG_DIR}/${file}`);
             const translation = await response.json();
             const languageName = translation["languageName"];
             const translators = translation["translators"].join(", ");
@@ -88,7 +89,7 @@ async function loadLanguages() {
 }
 
 async function setLanguage(locale) {
-    const response = await fetch(`lang/${locale}.json`);
+    const response = await fetch(`${LANG_DIR}/${locale}.json`);
     const translation = await response.json();
     const translationKeys = Object.keys(translation);
     for (const translationKey of translationKeys) {

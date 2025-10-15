@@ -21,9 +21,7 @@ app.whenReady().then(() => {
 
     mainWindow.loadFile('index.html');
 
-    const dev = true;
-
-    if (dev==true) {
+    if (!app.isPackaged) {
         pythonProcess = spawn('python', ['-u', 'app.py'], { detached: false });
     } else {
         const backendPath = path.join(__dirname, "dist", 'app.exe');
