@@ -28,28 +28,38 @@ async function updateLanguages() {
     }
 
     for (const [langCode, remoteUrl] of Object.entries(remoteIndex)) {
-        if (fs.existsSync('${langCode}.json')) {
+        let localData = null;
+        if (fs.existsSync(`lang/${langCode}.json`)) {
             const response = await fetch(`lang/${langCode}.json`);
-            const localData = await response.json();
-        } else {
-            const localData = null;
+            localData = await response.json();
         }
 
+        console.log(localData)
+
+        let remoteData;
         try {
             const res = await fetch(remoteUrl);
-        if (!res.ok) continue;
-            const remoteData = await res.json();
+            if (!res.ok) continue;
+            remoteData = await res.json();
         } catch {
             continue;
         }
 
-        const localVersion = localData["appVersion"] || "0.0.0";
-        const remoteVersion = remoteData["appVersion"] || "0.0.0";
-        const remoteLangVersion = localData["langVersion"] || 0;
-        const localLangVersion = remoteData["langVersion"] || 0;
+        let localAppVersion = "0.0.0";
+        let localLangVersion = 0;
+        if (localData!=null) {
+            localAppVersion = localData["appVersion"];
+            localLangVersion = localData["langVersion"];
+        }
 
-        if (isNewerVersion(remoteAppVersion, localAppVersion) && remoteLangVersion > localLangVersion) {
-            fs.writeFileSync(localPath, JSON.stringify(remoteData, null, 2));
+        remoteAppVersion = remoteData["appVersion"];
+        remoteLangVersion = remoteData["langVersion"];
+
+        console.log(remoteLangVersion);
+        console.log(localLangVersion);
+
+        if (remoteLangVersion > localLangVersion && remoteAppVersion==localAppVersion) {
+            fs.writeFileSync(`lang/${langCode}.json`, JSON.stringify(remoteData, null, 2));
         }
     }
 }
@@ -90,15 +100,4 @@ async function setLanguage(locale) {
     }
 
     fs.writeFileSync(CONFIG_FILE, JSON.stringify({ locale }, null, 2), "utf8");
-}
-
-
-function isNewerVersion(v1, v2) {
-    const a = v1.split(".").map(Number);
-    const b = v2.split(".").map(Number);
-    for (let i = 0; i < Math.max(a.length, b.length); i++) {
-        if ((a[i] || 0) > (b[i] || 0)) return true;
-        if ((a[i] || 0) < (b[i] || 0)) return false;
-    }
-    return false;
 }
