@@ -35,5 +35,9 @@
   "loading_0": "生成中...",
   "loading_1": "加载中...",
 
-  "language": "语言选择"
+  "language": "语言选择",
+  "languageName": "繁體中文",
+  "translators": ["CookieLee"],
+  "appVersion": "2.3.0",
+  "langVersion": "1"
 }

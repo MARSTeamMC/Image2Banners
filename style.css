@@ -433,7 +433,7 @@ input::-webkit-inner-spin-button {
   background-color: #252939;
   min-width: 160px;
   z-index: 1;
-  padding: 8px 8px;
+  padding: 0px 8px 8px 8px;
   right:0px;
   border-radius: 10px;
 }

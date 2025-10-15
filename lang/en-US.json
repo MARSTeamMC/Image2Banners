@@ -35,5 +35,9 @@
   "loading_0": "Loading...",
   "loading_1": "Loading...",
 
-  "language": "Language"
+  "language": "Language",
+  "languageName": "English",
+  "translators": ["MDen"],
+  "appVersion": "2.3.0",
+  "langVersion": "1"
 }
