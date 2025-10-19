@@ -36,4 +36,9 @@
   "loading_1": "Cargando...",
 
   "language": "Idioma"
+  
+  "languageName": "Español",
+  "translators": ["lawrencfgsdfg"],
+  "appVersion": "2.3.0",
+  "langVersion": "1"
 }
