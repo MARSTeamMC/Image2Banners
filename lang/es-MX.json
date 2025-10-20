@@ -1,0 +1,44 @@
+{
+  "jsonSelected": "JSON Seleccionado",
+
+  "selectFileButton": "Seleccionar Imagen / JSON",
+  "generateBanners": "Generar Estandartes",
+  "bannerCoords": "Selecciona las coordenadas del estandarte que quieres crear.",
+
+  "saveAsImg": "Guardar Como Imagen",
+  "saveAsImgDesc": "Guarda los estandartes generados como una imagen en Image2Banners /generated /images.",
+  "saveAsJSON": "Guardar Como JSON",
+  "saveAsJSONDesc": "Guarda los estandartes generados como JSON en Image2Banners /generated /json, para no tener que regenerar la imagen más tarde.",
+  "saveAsNBT": "Guardar Como NBT",
+  "saveAsNBTDesc": "Guarda los estandartes generados como NBT en Image2Banners /generated /nbt. Este archivo se puede usar para exportar los estandartes a Minecraft usando un bloque estructural. Coloca este archivo en {carpeta_de_minecraft} /saves /{tu_mundo} /generated /i2b /structures/ y, en un bloque estructural, escribe i2b:{nombre_de_archivo_nbt} (no pongas .nbt después del nombre). El bloque estructural no representa el tamaño real si los estandartes son más grandes de 32x32, debido a las limitaciones de Minecraft.",
+
+  "generateBlocks": "Generar Bloques",
+  "generateBlocksDesc": "¿Generar bloques detrás de los estandartes?",
+
+  "generateLayeredBanners": "Generar Estandartes en Capas",
+  "generateLayeredBannersDesc": "¿Generar estandartes que aparecerán detrás de la parte inferior del estandarte?",
+
+  "generateComplexBanners": "Generar Estandartes con 6+ Patrones",
+  "generateComplexBannersDesc": "¿Se deben generar estandartes con más de 6 patrones? No se pueden craftear, solo se pueden obtener con comandos.",
+
+  "usePatternItems": "Usar Estampados",
+  "usePatternItemsDesc": "¿Pueden los estandartes usar estampados como el de cosa, planeta y hocico?",
+
+  "threadsCount": "Número de Hilos",
+  "threadsCountDesc": "El número de hilos que el programa puede usar.",
+
+  "compareMethod": "Método de Comparación",
+  "compareMethodDesc": "¿Qué tan fuerte será el nuevo método de comparación de imágenes sobre el anterior? (Valor recomendado: 90)",
+
+  "giveCommand": "Comando para obtener un estandarte:",
+
+  "loading_0": "Cargando...",
+  "loading_1": "Cargando...",
+
+  "language": "Idioma"
+  
+  "languageName": "Español",
+  "translators": ["lawrencfgsdfg"],
+  "appVersion": "2.3.0",
+  "langVersion": "1"
+}
