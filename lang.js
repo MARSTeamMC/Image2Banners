@@ -28,8 +28,6 @@ async function updateLanguages() {
         return;
     }
 
-    console.log(LANG_DIR);
-
     for (const [langCode, remoteUrl] of Object.entries(remoteIndex)) {
         let localData = null;
         if (fs.existsSync(`${LANG_DIR}/${langCode}.json`)) {
