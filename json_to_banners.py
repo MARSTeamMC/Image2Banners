@@ -120,7 +120,8 @@ def process_section(c, section):
 
 def replace_old_texture_names(banner_json):
     old_texture_names = {
-        "dried_kelp": "dried_kelp_block"
+        "dried_kelp": "dried_kelp_block",
+        "powder_snow": "snow_block"
     }
 
     for part in banner_json.values():
