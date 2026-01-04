@@ -274,15 +274,18 @@ def hybrid_similarity(img1_rgb, img2_rgb, w_delta, w_ssim):
     img2_rgb = np.asarray(img2_rgb, dtype=np.float32) / 255.0
 
     if img1_rgb.shape != img2_rgb.shape:
-        img2_rgb = cv2.resize(img2_rgb, (img1_rgb.shape[1], img1_rgb.shape[0]))
+        img2_rgb = cv2.resize(img2_rgb, (img1_rgb.shape[1], img1_rgb.shape[0]), interpolation=cv2.INTER_AREA)
 
     lab1 = rgb2lab(img1_rgb)
     lab2 = rgb2lab(img2_rgb)
-    delta_e = deltaE_ciede2000(lab1, lab2)
+
+    lab1_ds = cv2.resize(lab1, (10,20), interpolation=cv2.INTER_AREA)
+    lab2_ds = cv2.resize(lab2, (10,20), interpolation=cv2.INTER_AREA)
+    delta_e = deltaE_ciede2000(lab1_ds, lab2_ds)
     mean_de = np.mean(delta_e)
     delta_sim = 1 / (1 + mean_de)
 
-    ssim_val = ssim(img1_rgb, img2_rgb, channel_axis=-1, data_range=1.0)
+    ssim_val = ssim(cv2.cvtColor(img1_rgb, cv2.COLOR_RGB2GRAY), cv2.cvtColor(img2_rgb, cv2.COLOR_RGB2GRAY), data_range=1.0, win_size=3)
 
     score = w_delta * delta_sim + w_ssim * ssim_val
 
