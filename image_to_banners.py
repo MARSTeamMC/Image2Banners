@@ -318,15 +318,16 @@ def most_common_color(img_rgb):
     lab_img = rgb2lab(img_rgb / 255.0)
     pixels = lab_img.reshape(-1, 3)
 
-    color_names = list(colors.keys())
+    color_names = np.array(list(colors.keys()))
     color_values = np.array(list(colors.values()))
 
-    counter = Counter()
+    dists = deltaE_ciede2000(
+        pixels[:, None, :],
+        color_values[None, :, :]
+    )
 
-    for px in pixels:
-        px = px.reshape(1, 3)
-        dists = [deltaE_ciede2000(px, c.reshape(1, 3))[0] for c in color_values]
-        best_match = color_names[np.argmin(dists)]
-        counter[best_match] += 1
+    nearest = np.argmin(dists, axis=1)
 
-    return counter.most_common(1)[0][0]
+    counts = np.bincount(nearest, minlength=len(color_names))
+
+    return color_names[np.argmax(counts)]
