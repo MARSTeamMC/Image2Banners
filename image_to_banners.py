@@ -1,6 +1,7 @@
 import base64
 import math
 import os
+import time
 from concurrent.futures import as_completed, ProcessPoolExecutor
 from io import BytesIO
 from pathlib import Path
@@ -10,7 +11,6 @@ import numpy as np
 from PIL import Image, ImageDraw
 from skimage.color import rgb2lab, deltaE_ciede2000
 from skimage.metrics import structural_similarity as ssim
-from collections import Counter
 
 from utils import print_with_flush, get_assets_folder
 
@@ -228,11 +228,11 @@ def generate_banner(image2_rgb, gen_big, use_pattern_items, compare_method):
 
     patterns = []
 
-    biggest_color = most_common_color(image2_rgb)
+    biggest_color = most_common_color(image2_rgb, True)
 
     patterns.append(f"{biggest_color}#wall_banner")
 
-    colors_in_img = colors
+    colors_in_img = most_common_color(image2_rgb, False)
 
     best_similarity_score = 0
     last_best_similarity_score = -1
@@ -247,7 +247,7 @@ def generate_banner(image2_rgb, gen_big, use_pattern_items, compare_method):
         last_best_similarity_score = best_similarity_score
         layer += 1
         for bv in bvs:
-            if bv.split('#')[0] in colors_in_img and bv.split('#')[1].split('_')[0] != "wall":
+            if (bv.split('#')[0] in colors_in_img and not (biggest_color==bv.split('#')[0] and layer==1)) and bv.split('#')[1].split('_')[0] != "wall":
                 if use_pattern_items or not (bv.split('#')[1].split(".")[0] in pattern_items):
                     bv_image = Image.open(path + bv)
                     temp_banner = best_banner_copy.copy()
@@ -314,12 +314,15 @@ def compare_main_second(main_img, second_img, img, compare_method):
     return False, main_img
 
 
-def most_common_color(img_rgb):
+def most_common_color(img_rgb, one_color, colors_set=None):
+    if colors_set is None:
+        colors_set = colors.copy()
+
     lab_img = rgb2lab(img_rgb / 255.0)
     pixels = lab_img.reshape(-1, 3)
 
-    color_names = np.array(list(colors.keys()))
-    color_values = np.array(list(colors.values()))
+    color_names = np.array(list(colors_set.keys()))
+    color_values = np.array(list(colors_set.values()))
 
     dists = deltaE_ciede2000(
         pixels[:, None, :],
@@ -330,4 +333,14 @@ def most_common_color(img_rgb):
 
     counts = np.bincount(nearest, minlength=len(color_names))
 
-    return color_names[np.argmax(counts)]
+    if one_color:
+        return color_names[np.argmax(counts)]
+    else:
+        common_colors = color_names[np.nonzero(counts)]
+        if len(common_colors)==1:
+            colors_set.pop(common_colors[0])
+            second_color = most_common_color(img_rgb, True, colors_set)
+            common_colors = np.append(common_colors, second_color)
+            return common_colors
+        else:
+            return common_colors
