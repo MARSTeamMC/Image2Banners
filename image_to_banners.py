@@ -140,12 +140,8 @@ def process_image(c, img, gen_blocks, gen_layering, gen_big, use_pattern_items, 
         draw.rectangle((1, 0, 20, 18), fill=(0, 0, 0, 255))
 
         img_up_rgb = np.array(img_up.convert('RGB'))
-        mask = (img_up_rgb == [0, 0, 0]).all(axis=-1)
-        img_up_rgb[mask] = [10, 10, 10]
 
         img_down_rgb = np.array(img_down.convert('RGB'))
-        mask = (img_down_rgb == [0, 0, 0]).all(axis=-1)
-        img_down_rgb[mask] = [10, 10, 10]
 
         img_up.close()
         img_down.close()
@@ -336,7 +332,7 @@ def most_common_color(img_rgb, one_color, colors_set=None):
     if one_color:
         return color_names[np.argmax(counts)]
     else:
-        common_colors = color_names[np.nonzero(counts)]
+        common_colors = color_names[np.where(counts>=0.05*counts.sum())]
         if len(common_colors)==1:
             colors_set.pop(common_colors[0])
             second_color = most_common_color(img_rgb, True, colors_set)
