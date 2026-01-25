@@ -1,0 +1,43 @@
+{
+  "jsonSelected": "JSON kiválasztva",
+
+  "selectFileButton": "Kép / JSON kiválasztása",
+  "generateBanners": "Zászlók generálása",
+  "bannerCoords": "Válaszd ki annak a zászlónak a koordinátáit, amelyet elkészíteni szeretnél.",
+
+  "saveAsImg": "Mentés képként",
+  "saveAsImgDesc": "A generált zászlókat képként menti az Image2Banners /generated /images mappába.",
+  "saveAsJSON": "Mentés JSON-ként",
+  "saveAsJSONDesc": "A generált zászlókat JSON-ként menti az Image2Banners /generated /json mappába, így később nem kell újra legenerálni a képet.",
+  "saveAsNBT": "Mentés NBT-ként",
+  "saveAsNBTDesc": "A generált zászlókat NBT-ként menti az Image2Banners /generated /nbt mappába. Ez a fájl használható a zászlók Minecraftba való exportálásához egy structureblockal. Helyezd ezt a fájlt a {minecraft_folder} /saves /{your_world} /generated /i2b /structures/ mappába, majd egy structureblockba írd be: i2b:{your_nbt_file_name} (ne írd hozzá a .nbt kiterjesztést). A szerkezetblokk nem a valós méretet mutatja, ha a zászlók nagyobbak mint 32x32, a Minecraft korlátozásai miatt.",
+
+  "generateBlocks": "Blokkok generálása",
+  "generateBlocksDesc": "Generáljon blokkokat a zászlók mögé?",
+
+  "generateLayeredBanners": "Rétegzett zászlók generálása",
+  "generateLayeredBannersDesc": "Generáljon olyan zászlókat, amelyek a zászló alsó része mögött jelennek meg?",
+
+  "generateComplexBanners": "6+ mintás zászlók generálása",
+  "generateComplexBannersDesc": "Legenerálódjanak a 6-nál több mintát tartalmazó zászlók? Ezek nem craftolhatók csak parancsokkal szerezhetők meg.",
+
+  "usePatternItems": "Zászlóminta tárgyak használata",
+  "usePatternItemsDesc": "Használhatnak-e a zászlók mintatárgyakat, mint például a Thing, Globe és Snout?",
+
+  "threadsCount": "thread-ek(szálak) száma",
+  "threadsCountDesc": "A program által használható szálak száma.",
+
+  "compareMethod": "Összehasonlítási módszer",
+  "compareMethodDesc": "Mennyivel legyen erősebb az új képfeldolgozási módszer a réginél? (Ajánlott: 90)",
+
+  "giveCommand": "Parancs a zászló megszerzéséhez:",
+
+  "loading_0": "Betöltés...",
+  "loading_1": "Betöltés...",
+
+  "language": "Nyelv",
+  "languageName": "Magyar",
+  "translators": ["wawa dev"],
+  "appVersion": "2.3.0",
+  "langVersion": "1"
+}
