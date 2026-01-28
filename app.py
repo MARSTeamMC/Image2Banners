@@ -123,7 +123,7 @@ def steps(data):
     id = data['id']
 
     buffer = BytesIO()
-    block = Image.open(f"{get_assets_folder()}/block/{dict_banner[id]['block']}.png")
+    block = Image.open(f"{get_assets_folder()}/blocks/{dict_banner[id]['block']}.png")
     block.save(buffer, format="PNG")
     buffer.seek(0)
     block_result = base64.b64encode(buffer.read()).decode('utf-8')

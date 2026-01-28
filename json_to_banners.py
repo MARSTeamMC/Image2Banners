@@ -100,7 +100,7 @@ def banner_gen(json_path, threads_count):
 
 
 def process_section(c, section):
-    path = f"{get_assets_folder()}/block/"
+    path = f"{get_assets_folder()}/blocks/"
 
     coords = section[0]
     section = section[1]

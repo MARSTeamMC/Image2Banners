@@ -1,4 +1,5 @@
 import base64
+import json
 import math
 import os
 import time
@@ -185,20 +186,27 @@ def process_image(c, img, gen_blocks, gen_layering, gen_big, use_pattern_items, 
 
 
 def generate_blocks(image_rgb, part, compare_method):
-    path = f"{get_assets_folder()}/block/"
+    path = f"{get_assets_folder()}/blocks/"
 
     block_name = "polished_andesite"
 
+    best_block = Image.open(f"{path}{block_name}.png")
+
     if image_rgb is None:
-        return block_name, Image.open(f"{path}{block_name}.png").resize((22, 22))
+        return block_name,best_block.resize((22, 22))
+
+    common_colors = most_common_color(image_rgb, 2)
+
+    blocks = []
+    with open(f"{path}blocks_by_color.json", "r", encoding="utf-8") as f:
+        blocks_by_colors = json.load(f)
+        raw_blocks = [i for n,i in blocks_by_colors.items() if n in common_colors]
+        for i in raw_blocks:
+            blocks+=i
 
     best_similarity_score = 0
 
-    bvs = os.listdir(path)
-
-    best_block = Image.open(path + bvs[0])
-
-    for bv in bvs:
+    for bv in set(blocks):
         bv_image = Image.open(path + bv).resize((22, 22), Image.NEAREST).convert('RGBA')
 
         draw = ImageDraw.Draw(bv_image)
@@ -224,11 +232,11 @@ def generate_banner(image2_rgb, gen_big, use_pattern_items, compare_method):
 
     patterns = []
 
-    biggest_color = most_common_color(image2_rgb, True)
+    biggest_color = most_common_color(image2_rgb, 1)[0]
 
     patterns.append(f"{biggest_color}#wall_banner")
 
-    colors_in_img = most_common_color(image2_rgb, False)
+    colors_in_img = most_common_color(image2_rgb, 0)
 
     best_similarity_score = 0
     last_best_similarity_score = -1
@@ -310,7 +318,7 @@ def compare_main_second(main_img, second_img, img, compare_method):
     return False, main_img
 
 
-def most_common_color(img_rgb, one_color, colors_set=None):
+def most_common_color(img_rgb, color_count, colors_set=None):
     if colors_set is None:
         colors_set = colors.copy()
 
@@ -329,14 +337,14 @@ def most_common_color(img_rgb, one_color, colors_set=None):
 
     counts = np.bincount(nearest, minlength=len(color_names))
 
-    if one_color:
-        return color_names[np.argmax(counts)]
-    else:
+    if color_count==0:
         common_colors = color_names[np.where(counts>=0.05*counts.sum())]
         if len(common_colors)==1:
             colors_set.pop(common_colors[0])
-            second_color = most_common_color(img_rgb, True, colors_set)
+            second_color = most_common_color(img_rgb, 1, colors_set)[0]
             common_colors = np.append(common_colors, second_color)
             return common_colors
         else:
             return common_colors
+    else:
+        return color_names[np.argpartition(counts, -color_count)[-color_count:]]
