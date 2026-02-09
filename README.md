@@ -7,7 +7,7 @@ In the Releases section, find Image2Banners X.X.X and download Image2Banners-win
 ## Examples
 ### №1
 <img src="https://github.com/user-attachments/assets/a9fd907d-6704-4d8e-947a-ee065168a660" width="33%">
-<img src="https://github.com/user-attachments/assets/793c4573-2651-4985-a65b-a13abbd22cbd" width="33%">
+<img src="https://github.com/user-attachments/assets/c010c00b-4104-44c8-9fd0-1e97cfd42bbd" width="33%">
 
 ### №2
 <img src="https://github.com/user-attachments/assets/4af0865c-43e9-4d82-8a83-bc8ec3d51a86" width="33%">
