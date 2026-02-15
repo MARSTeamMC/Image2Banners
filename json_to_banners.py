@@ -122,7 +122,8 @@ def replace_old_texture_names(banner_json):
     old_texture_names = {
         "dried_kelp": "dried_kelp_block",
         "powder_snow": "snow_block",
-        "magma": "magma_block"
+        "magma": "magma_block",
+        "pale_moss_carpet": "pale_moss_block"
     }
 
     for part in banner_json.values():
