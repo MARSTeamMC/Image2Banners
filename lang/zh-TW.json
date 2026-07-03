@@ -1,43 +1,43 @@
 {
-  "jsonSelected": "已选择 JSON",
+  "jsonSelected": "已選擇 JSON",
 
-  "selectFileButton": "选择图片 / JSON",
-  "generateBanners": "生成旗帜",
-  "bannerCoords": "请选择你要制作的旗帜大小(长宽)",
+  "selectFileButton": "選擇圖片 / JSON",
+  "generateBanners": "生成旗幟",
+  "bannerCoords": "請選擇你要製作的旗幟大小（長寬）",
 
-  "saveAsImg": "保存为图片",
-  "saveAsImgDesc": "将生成的旗帜保存为图片，文件路径位于 Image2Banners/generated/images",
-  "saveAsJSON": "保存为 JSON",
-  "saveAsJSONDesc": "将生成的旗帜保存为 JSON，文件路径位于 Image2Banners/generated/json，无需再次生成图片",
-  "saveAsNBT": "保存为 NBT",
-  "saveAsNBTDesc": "将生成的旗帜保存为 NBT，文件路径位于 Image2Banners /generated /nbt 此文件可通过结构方块导入旗帜到 Minecraft 将文件放入 {我的世界文件夹} /saves /{你的世界存档} /generated /i2b /structures /，在结构方块中输入 i2b:{Nbt文件名称}（不要加 .nbt 后缀） 由于 Minecraft 的限制，结构方块并不能实现实际尺寸大于 32x32 的旗帜",
+  "saveAsImg": "儲存為圖片",
+  "saveAsImgDesc": "將生成的旗幟儲存為圖片，檔案路徑位於 Image2Banners/generated/images",
+  "saveAsJSON": "儲存為 JSON",
+  "saveAsJSONDesc": "將生成的旗幟儲存為 JSON，檔案路徑位於 Image2Banners/generated/json，無需再次生成圖片",
+  "saveAsNBT": "儲存為 NBT",
+  "saveAsNBTDesc": "將生成的旗幟儲存為 NBT，檔案路徑位於 Image2Banners/generated/nbt。此檔案可透過結構方塊導入旗幟到 Minecraft。將檔案放入 {minecraft_folder}/saves/{your_world}/generated/i2b/structures/，在結構方塊中輸入 i2b:{Nbt檔案名稱}（不要加 .nbt 副檔名）。由於 Minecraft 的限制，結構方塊無法呈現大於 32x32 的旗幟實際尺寸。",
 
-  "generateBlocks": "生成方块",
-  "generateBlocksDesc": "是否在旗帜后方生成方块？",
+  "generateBlocks": "生成方塊",
+  "generateBlocksDesc": "是否在旗幟後方生成方塊？",
 
-  "generateLayeredBanners": "生成多层图案旗帜",
-  "generateLayeredBannersDesc": "是否生成会显示在旗帜上的多个图案？",
+  "generateLayeredBanners": "生成多層圖樣旗幟",
+  "generateLayeredBannersDesc": "是否生成會顯示在旗幟上的多個圖樣？",
 
-  "generateComplexBanners": "生成含 6+ 图案的旗帜",
-  "generateComplexBannersDesc": "是否生成含有超过 6 个图案的旗帜？这些旗帜无法合成，只能通过命令获得",
+  "generateComplexBanners": "生成含 6+ 圖樣的旗幟",
+  "generateComplexBannersDesc": "是否生成含有超過 6 個圖樣的旗幟？這些旗幟無法合成，只能透過指令獲得。",
 
-  "usePatternItems": "使用旗帜图案物品",
-  "usePatternItemsDesc": "旗帜是否可以使用例如Mojang、地球、猪鼻等旗帜图案物品？",
+  "usePatternItems": "使用旗幟圖樣物品",
+  "usePatternItemsDesc": "旗幟是否可以使用例如 Mojang、地球、豬鼻等旗幟圖樣物品？",
 
-  "threadsCount": "线程数",
-  "threadsCountDesc": "程序可使用的线程数量",
+  "threadsCount": "執行緒數量",
+  "threadsCountDesc": "程式可使用的執行緒數量。",
 
-  "compareMethod": "比较方法",
-  "compareMethodDesc": "调整图像比较算法的敏感度，数值越高，算法更不注重精细对比；数值越低，算法更注重展现图片细节。（建议设置为90）",
+  "compareMethod": "比較方法",
+  "compareMethodDesc": "調整圖片比較演算法的敏感度，數值越高，演算法越不注重精細對比；數值越低，演算法越注重展現圖片細節。（建議設為 90）",
 
-  "giveCommand": "获取旗帜的命令:",
+  "giveCommand": "獲取旗幟的指令：",
 
   "loading_0": "生成中...",
-  "loading_1": "加载中...",
+  "loading_1": "載入中...",
 
-  "language": "语言选择",
+  "language": "語言選擇",
   "languageName": "繁體中文",
   "translators": ["CookieLee"],
   "appVersion": "2.4.0",
-  "langVersion": "1"
+  "langVersion": "2"
 }
